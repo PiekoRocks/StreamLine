@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamLine - Manage Hydrants</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h1>Manage Hydrants</h1>
+    <a href="index.html">Back to Home</a>
+    
+    <h2>Hydrant Records</h2>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>ID</th>
+            <th>Region</th>
+            <th>Flow Rate</th>
+            <th>Operational</th>
+            <th>Longitude</th>
+            <th>Latitude</th>
+        </tr>
+        <tr>
+            <td><a href="#">Edit</a></td>
+            <td><a href="#">Delete</a></td>
+            <td>1</td>
+            <td>Downtown</td>
+            <td>1500</td>
+            <td>Yes</td>
+            <td>-23.0455</td>
+            <td>50.2865</td>
+        </tr>
+    </table>
+
+    <h2>Add a New Hydrant</h2>
+    <form>
+        <label>ID:</label> <input type="text" name="id"><br>
+        <label>Region:</label> <input type="text" name="region"><br>
+        <label>Flow Rate:</label> <input type="text" name="flow_rate"><br>
+        <label>Operational:</label> <input type="checkbox" name="operational"><br>
+        <label>Longitude:</label> <input type="text" name="longitude"><br>
+        <label>Latitude:</label> <input type="text" name="latitude"><br>
+        <input type="submit" value="Add Hydrant">
+    </form>
+</body>
+</html>

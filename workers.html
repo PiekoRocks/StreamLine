@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamLine - Manage Workers</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h1>Manage Workers</h1>
+    <a href="index.html">Back to Home</a>
+    
+    <h2>Worker Records</h2>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>ID</th>
+            <th>Region</th>
+            <th>Name</th>
+            <th>Salary</th>
+            <th>Assigned Date</th>
+        </tr>
+        <tr>
+            <td><a href="#">Edit</a></td>
+            <td><a href="#">Delete</a></td>
+            <td>201</td>
+            <td>Downtown</td>
+            <td>John Smith</td>
+            <td>50000</td>
+            <td>2024-12-01</td>
+        </tr>
+    </table>
+
+    <h2>Add a New Worker</h2>
+    <form>
+        <label>ID:</label> <input type="text" name="id"><br>
+        <label>Region:</label> <input type="text" name="region"><br>
+        <label>Name:</label> <input type="text" name="name"><br>
+        <label>Salary:</label> <input type="text" name="salary"><br>
+        <label>Assigned Date:</label> <input type="date" name="assigned_date"><br>
+        <input type="submit" value="Add Worker">
+    </form>
+</body>
+</html>

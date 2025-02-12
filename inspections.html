@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamLine - Track Inspections</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h1>Track Inspections</h1>
+    <a href="index.html">Back to Home</a>
+    
+    <h2>Inspection Records</h2>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Notes</th>
+        </tr>
+        <tr>
+            <td><a href="#">Edit</a></td>
+            <td><a href="#">Delete</a></td>
+            <td>1</td>
+            <td>2025-02-01</td>
+            <td>Passed</td>
+            <td>Minor damage</td>
+        </tr>
+    </table>
+
+    <h2>Add a New Inspection</h2>
+    <form>
+        <label>ID:</label> <input type="text" name="id"><br>
+        <label>Date:</label> <input type="date" name="date"><br>
+        <label>Status:</label> 
+        <select name="status">
+            <option value="Passed">Passed</option>
+            <option value="Failed">Failed</option>
+        </select><br>
+        <label>Notes:</label> <textarea name="notes"></textarea><br>
+        <input type="submit" value="Add Inspection">
+    </form>
+</body>
+</html>
