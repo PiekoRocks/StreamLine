@@ -7,39 +7,55 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <h1>Log Maintenance</h1>
-    <a href="index.html">Back to Home</a>
+    <header>
+        <div class="header-container">
+            <img src="icons/unnamed.png" alt="StreamLine Logo" class="logo">
+            <h1>StreamLine - Log Maintenance</h1>
+        </div>
+    </header>
+    <nav>
+        <ul class="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="hydrants.html">Manage Hydrants</a></li>
+            <li><a href="regions.html">Manage Regions</a></li>
+            <li><a href="inspections.html">Track Inspections</a></li>
+            <li><a href="workers.html">Manage Workers</a></li>
+            <li><a href="maintenance.html">Log Maintenance</a></li>
+        </ul>
+    </nav>
     
-    <h2>Maintenance Records</h2>
-    <table border="1" cellpadding="5">
-        <tr>
-            <th>Edit</th>
-            <th>Delete</th>
-            <th>ID</th>
-            <th>Hydrant ID</th>
-            <th>Cost</th>
-            <th>Completed</th>
-            <th>Needed</th>
-        </tr>
-        <tr>
-            <td><a href="#">Edit</a></td>
-            <td><a href="#">Delete</a></td>
-            <td>1</td>
-            <td>101</td>
-            <td>150</td>
-            <td>Yes</td>
-            <td>Yes</td>
-        </tr>
-    </table>
+    <div class="content">
+      <h2>Maintenance Records</h2>
+      <table border="1" cellpadding="5">
+          <tr>
+              <th>Edit</th>
+              <th>Delete</th>
+              <th>ID</th>
+              <th>Hydrant ID</th>
+              <th>Cost</th>
+              <th>Completed</th>
+              <th>Needed</th>
+          </tr>
+          <tr>
+              <td><a href="#">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>1</td>
+              <td>101</td>
+              <td>150</td>
+              <td>Yes</td>
+              <td>Yes</td>
+          </tr>
+      </table>
 
-    <h2>Add a New Maintenance Record</h2>
-    <form>
-        <label>ID:</label> <input type="text" name="id"><br>
-        <label>Hydrant ID:</label> <input type="text" name="hydrant_id"><br>
-        <label>Cost:</label> <input type="text" name="cost"><br>
-        <label>Completed:</label> <input type="checkbox" name="completed"><br>
-        <label>Needed:</label> <input type="checkbox" name="needed"><br>
-        <input type="submit" value="Add Maintenance Record">
-    </form>
+      <h2>Add a New Maintenance Record</h2>
+      <form>
+          <label>ID:</label> <input type="text" name="id"><br>
+          <label>Hydrant ID:</label> <input type="text" name="hydrant_id"><br>
+          <label>Cost:</label> <input type="text" name="cost"><br>
+          <label>Completed:</label> <input type="checkbox" name="completed"><br>
+          <label>Needed:</label> <input type="checkbox" name="needed"><br>
+          <input type="submit" value="Add Maintenance Record">
+      </form>
+    </div>
 </body>
 </html>
