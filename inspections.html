@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreamLine - Track Inspections</title>
+    <title>StreamLine - Inspections Management</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/png" href="logo.png">
+    <script>
+        function confirmDelete() {
+            return confirm('Are you sure you want to delete this record? This action may also remove related data.');
+        }
+    </script>
+    
 </head>
 <body>
     <header>
         <div class="header-container">
             <img src="logo.png" alt="StreamLine Logo" class="logo">
-            <h1>StreamLine - Track Inspections</h1>
+            <h1>StreamLine - Inspections Management</h1>
         </div>
     </header>
     <nav>
@@ -26,38 +32,37 @@
     </nav>
     
     <div class="content">
-      <h2>Inspection Records</h2>
-      <table border="1" cellpadding="5">
-          <tr>
-              <th>Edit</th>
-              <th>Delete</th>
-              <th>ID</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Notes</th>
-          </tr>
-          <tr>
-              <td><a href="#">Edit</a></td>
-              <td><a href="#">Delete</a></td>
-              <td>1</td>
-              <td>2025-02-01</td>
-              <td>Passed</td>
-              <td>Minor damage</td>
-          </tr>
-      </table>
-
-      <h2>Add a New Inspection</h2>
-      <form>
-          <label>ID:</label> <input type="text" name="id"><br>
-          <label>Date:</label> <input type="date" name="date"><br>
-          <label>Status:</label> 
-          <select name="status">
-              <option value="Passed">Passed</option>
-              <option value="Failed">Failed</option>
-          </select><br>
-          <label>Notes:</label> <textarea name="notes"></textarea><br>
-          <input type="submit" value="Add Inspection">
-      </form>
+        <h2>Inspection Records</h2>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td><a href="#editInspection">Edit</a></td>
+                <td><a href="#" onclick="return confirmDelete();">Delete</a></td>
+                <td>1</td>
+                <td>2025-02-01</td>
+                <td>Passed</td>
+                <td>Minor damage</td>
+            </tr>
+        </table>
+        
+        <h2>Add / Edit Inspection</h2>
+        <form id="editInspection">
+            <label>Inspection Date:</label> <input type="date" name="inspection_date"><br>
+            <label>Status:</label> 
+            <select name="status">
+                <option value="Passed">Passed</option>
+                <option value="Failed">Failed</option>
+            </select><br>
+            <label>Notes:</label> <textarea name="notes"></textarea><br>
+            <input type="submit" value="Save Inspection">
+        </form>
     </div>
 </body>
 </html>

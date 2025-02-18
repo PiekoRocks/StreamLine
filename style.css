@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     background-color: #f4f4f4;
 }
@@ -12,7 +12,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ff0000;
+    background-color: #e72634;
     padding: 10px;
     color: white;
 }
@@ -30,7 +30,7 @@ h1 {
 
 .navbar {
     list-style: none;
-    background-color: #b30000;
+    background-color: #E72634;
     padding: 0;
     margin: 0;
     display: flex;
@@ -50,7 +50,7 @@ h1 {
 }
 
 .navbar a:hover {
-    background-color: #7f0000;
+    background-color: #ED444F;
     border-radius: 4px;
 }
 
@@ -70,7 +70,7 @@ table th, table td {
 }
 
 table th {
-    background-color: #ff0000;
+    background-color: #ED444F;
     color: white;
 }
 
@@ -80,7 +80,7 @@ tr:nth-child(even) {
 
 a {
     text-decoration: none;
-    color: #ff0000;
+    color: #ED444F;
 }
 
 a:hover {
@@ -109,7 +109,7 @@ input, select, textarea {
 }
 
 input[type="submit"] {
-    background-color: #ff0000;
+    background-color: #ED444F;
     color: white;
     border: none;
     padding: 10px;
@@ -118,5 +118,5 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #b30000;
+    background-color: #ED444F;
 }
