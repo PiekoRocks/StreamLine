@@ -22,8 +22,6 @@ StreamLine serves as a **centralized hub** for hydrant data, consolidating:
 
 With **automated scheduling** and a **real-time map interface**, this platform improves **efficiency, reduces human error**, and enhances hydrant tracking.
 
----
-
 ## Tech Stack
 
 ### **Front End**
@@ -34,8 +32,6 @@ With **automated scheduling** and a **real-time map interface**, this platform i
 ### **Back End**
 ![Flask](https://img.shields.io/badge/Flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-%23007396.svg?style=for-the-badge&logo=sqlite&logoColor=white)
-
----
 
 ## **Installation Guide**
 ### ** Clone the Repository**
