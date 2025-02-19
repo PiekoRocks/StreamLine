@@ -1,10 +1,10 @@
 # StreamLine
 A centralized application for managing and tracking fire hydrants, ensuring operational efficiency and fire safety.
 
-## 🔗 Live Link
+## Live Link
 TBD (Replace with deployed link)
 
-## 🔥 Overview
+## Overview
 Our **StreamLine** application is designed to manage data for over **5,000 fire hydrants** across urban, suburban, and rural areas. Fire hydrants require **regular maintenance**, including inspections and repairs performed by field workers. 
 
 To ensure operational efficiency and **make it easier to keep hydrants working for emergencies**, hydrant status must be tracked, allowing field workers to **prioritize tasks effectively**.
@@ -24,12 +24,21 @@ With **automated scheduling** and a **real-time map interface**, this platform i
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
+### **Front End**
+- [x] **HTML5**
+- [x] **CSS3**
+- [x] **JavaScript**
+
+### **Back End**
+- [x] **Flask** (Lightweight Python Web Framework)
+- [x] **SQL** (Database)
+- [x] **Vanilla JavaScript** (for client-side logic & API calls)
 
 ---
 
-## 🔄 **Installation Guide**
-### **1️⃣ Clone the Repository**
+## **Installation Guide**
+### ** Clone the Repository**
 ```bash
-git clone https://github.com/yourusername/streamline.git
+git clone https://github.com/PiekoRocks/StreamLine
