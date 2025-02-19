@@ -27,14 +27,13 @@ With **automated scheduling** and a **real-time map interface**, this platform i
 ## Tech Stack
 
 ### **Front End**
-- [x] **HTML5**
-- [x] **CSS3**
-- [x] **JavaScript**
+![HTML5](https://img.shields.io/badge/HTML5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)
 
 ### **Back End**
-- [x] **Flask** (Lightweight Python Web Framework)
-- [x] **SQL** (Database)
-- [x] **Vanilla JavaScript** (for client-side logic & API calls)
+![Flask](https://img.shields.io/badge/Flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-%23007396.svg?style=for-the-badge&logo=sqlite&logoColor=white)
 
 ---
 
