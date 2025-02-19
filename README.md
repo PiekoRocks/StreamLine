@@ -1,5 +1,5 @@
 # StreamLine
-A centralized application for managing and tracking fire hydrants, ensuring operational efficiency and fire safety.
+A centralized application for managing and tracking fire hydrants.
 
 ## Live Link
 TBD (Replace with deployed link)
@@ -19,8 +19,6 @@ StreamLine serves as a **centralized hub** for hydrant data, consolidating:
 - **Hydrant Types** – Categorization of hydrants based on specifications and capacity.
 - **Maintenance Logs** – Detailed records of past and upcoming maintenance activities.
 - **Inspection History** – Tracks inspection status, ensuring compliance with safety standards.
-
-With **automated scheduling** and a **real-time map interface**, this platform improves **efficiency, reduces human error**, and enhances hydrant tracking.
 
 ## Tech Stack
 
