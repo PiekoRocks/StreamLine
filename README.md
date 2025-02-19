@@ -20,6 +20,13 @@ StreamLine serves as a **centralized hub** for hydrant data, consolidating:
 - **Maintenance Logs** – Detailed records of past and upcoming maintenance activities.
 - **Inspection History** – Tracks inspection status, ensuring compliance with safety standards.
 
+## **Diagrams**
+### **Schema Diagram**
+<img width="643" alt="Screenshot 2025-02-18 at 5 18 21 PM" src="https://github.com/user-attachments/assets/39508c03-2155-48d2-b9c3-69db66a0b8f2" />
+
+### **Entity Relationship Diagram**
+<img width="648" alt="Screenshot 2025-02-18 at 5 18 38 PM" src="https://github.com/user-attachments/assets/54cb871c-f0f2-4d5a-8487-96b698af417e" />
+
 ## Tech Stack
 
 ### **Front-End**
@@ -38,10 +45,3 @@ StreamLine serves as a **centralized hub** for hydrant data, consolidating:
 ```bash
 git clone https://github.com/PiekoRocks/StreamLine
 ```
-
-## **Diagrams**
-### **Entity Relationship Diagram
-<img width="643" alt="Screenshot 2025-02-18 at 5 18 21 PM" src="https://github.com/user-attachments/assets/39508c03-2155-48d2-b9c3-69db66a0b8f2" />
-
-### **Schema Diagram**
-<img width="648" alt="Screenshot 2025-02-18 at 5 18 38 PM" src="https://github.com/user-attachments/assets/54cb871c-f0f2-4d5a-8487-96b698af417e" />
