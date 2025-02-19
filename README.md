@@ -24,12 +24,12 @@ With **automated scheduling** and a **real-time map interface**, this platform i
 
 ## Tech Stack
 
-### **Front End**
+### **Front-End**
 - [x] **HTML5**
 - [x] **CSS3**
 - [x] **JavaScript**
 
-### **Back End**
+### **Back-End**
 - [ ] **Flask** (Lightweight Python Web Framework)
 - [x] **SQL** (Database)
 - [ ] **Vanilla JavaScript** (for client-side logic & API calls)
