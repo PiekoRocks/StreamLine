@@ -39,6 +39,6 @@ With **automated scheduling** and a **real-time map interface**, this platform i
 ---
 
 ## **Installation Guide**
-### ** Clone the Repository**
+### **Clone the Repository**
 ```bash
 git clone https://github.com/PiekoRocks/StreamLine
