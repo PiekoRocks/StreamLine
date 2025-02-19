@@ -14,29 +14,26 @@ Most hydrant information is stored in **multiple systems** (spreadsheets, handwr
 
 ### **The Solution**
 StreamLine serves as a **centralized hub** for hydrant data, consolidating:
-- **Unique IDs**
-- **Locations**
-- **Hydrant types**
-- **Maintenance logs**
-- **Inspection history**
+- **Unique IDs** – Each hydrant is assigned a distinct identifier for accurate record-keeping.
+- **Locations** – Real-time GPS coordinates ensure easy hydrant identification and mapping.
+- **Hydrant Types** – Categorization of hydrants based on specifications and capacity.
+- **Maintenance Logs** – Detailed records of past and upcoming maintenance activities.
+- **Inspection History** – Tracks inspection status, ensuring compliance with safety standards.
 
 With **automated scheduling** and a **real-time map interface**, this platform improves **efficiency, reduces human error**, and enhances hydrant tracking.
 
----
-
 ## Tech Stack
 
-### **Front End**
+### **Front-End**
 - [x] **HTML5**
 - [x] **CSS3**
 - [x] **JavaScript**
 
-### **Back End**
-- [x] **Flask** (Lightweight Python Web Framework)
+### **Back-End**
+- [ ] **Flask** (Lightweight Python Web Framework)
 - [x] **SQL** (Database)
-- [x] **Vanilla JavaScript** (for client-side logic & API calls)
+- [ ] **Vanilla JavaScript** (for client-side logic & API calls)
 
----
 
 ## **Installation Guide**
 ### **Clone the Repository**
