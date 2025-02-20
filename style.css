@@ -5,7 +5,11 @@ body {
 }
 
 .content {
-    margin: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
 }
 
 .header-container {
@@ -15,6 +19,71 @@ body {
     background-color: #e72634;
     padding: 10px;
     color: white;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.main-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.side-content {
+    flex: 0 0 400px; /* Set a fixed width for the sidebar */
+    margin-right: 20px;
+    background-color: #f0f0f0; /* Add background color to the sidebar */
+    padding: 20px; /* Add padding to the sidebar */
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.2); /* Add a subtle shadow to the sidebar */
+    border-radius: 5px; /* Add border radius to the sidebar */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the forms horizontally */
+    justify-content: center; /* Center the forms vertically */
+}
+
+.table-container {
+    flex: 1;
+    overflow-x: auto; /* Ensure the table does not overlap */
+}
+
+.form-container {
+    padding: 0 15px 15px;
+    width: 100%;
+    max-width: 380px; /* Set a fixed width for the form */
+    border-radius: 10px; /* Add border radius to the form container */
+    background-color: white; /* Ensure the form has a white background */
+}
+
+.form-container h2 {
+    text-align: center; /* Center-align the h2 elements */
+}
+
+.form-container form input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.form-container form {
+    max-width: 100%;
+}
+
+.form-container form input,
+.form-container form select,
+.form-container form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .logo {
@@ -121,6 +190,35 @@ input[type="submit"]:hover {
     background-color: #ED444F;
 }
 
+.styled-button {
+    background-color: #ED444F;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.styled-button:hover {
+    background-color: #e72634;
+}
+
+.cancel-button {
+    background-color: #ccc;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.cancel-button:hover {
+    background-color: #999;
+}
+
 /* Welcome message animation */
 .welcome-message {
     position: relative;
@@ -176,4 +274,3 @@ input[type="submit"]:hover {
     line-height: 1.6;
     margin-bottom: 20px;
 }
-

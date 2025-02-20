@@ -10,10 +10,10 @@
 <body>
     <header>
         <div class="header-container">
-            <img src="logo.png" alt="StreamLine Logo" class="logo">
-            <h1>Log Maintenance</h1>
+          <img src="logo.png" alt="StreamLine Logo" class="logo">
+          <h1>StreamLine</h1>
         </div>
-    </header>
+      </header>
     <nav>
         <ul class="navbar">
             <li><a href="index.html">Home</a></li>
@@ -26,37 +26,96 @@
     </nav>
     
     <div class="content">
-      <h2>Maintenance Records</h2>
-      <table border="1" cellpadding="5">
-          <tr>
-              <th>Edit</th>
-              <th>Delete</th>
-              <th>ID</th>
-              <th>Hydrant ID</th>
-              <th>Cost</th>
-              <th>Completed</th>
-              <th>Needed</th>
-          </tr>
-          <tr>
-              <td><a href="#">Edit</a></td>
-              <td><a href="#">Delete</a></td>
-              <td>1</td>
-              <td>101</td>
-              <td>150</td>
-              <td>Yes</td>
-              <td>Yes</td>
-          </tr>
-      </table>
-
-      <h2>Add a New Maintenance Record</h2>
-      <form>
-          <label>ID:</label> <input type="text" name="id"><br>
-          <label>Hydrant ID:</label> <input type="text" name="hydrant_id"><br>
-          <label>Cost:</label> <input type="text" name="cost"><br>
-          <label>Completed:</label> <input type="checkbox" name="completed"><br>
-          <label>Needed:</label> <input type="checkbox" name="needed"><br>
-          <input type="submit" value="Add Maintenance Record">
-      </form>
+      <h2 class="page-title">Maintenance Records</h2>
+      <div class="main-content">
+        <div class="side-content">
+          <button id="showAddFormButton" class="styled-button">Add New Maintenance Record</button>
+          <div class="form-container" id="addFormContainer" style="display: none;">
+            <h2>Add a New Maintenance Record</h2>
+            <form id="addForm">
+                <label>ID:</label>
+                <input type="text" name="id"><br>
+          
+                <label>Hydrant ID:</label>
+                <input type="text" name="hydrant_id"><br>
+          
+                <label>Cost:</label>
+                <input type="text" name="cost"><br>
+          
+                <label>Completed:</label>
+                <select name="completed">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select><br>
+          
+                <label>Needed:</label>
+                <select name="needed">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select><br>
+          
+                <div class="button-container">
+                    <input type="submit" value="Add Maintenance Record">
+                    <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
+                </div>
+            </form>
+          </div>
+          
+          <div class="form-container" id="editFormContainer" style="display: none;">
+            <h2>Edit Maintenance Record</h2>
+            <form id="editForm">
+                <label>ID:</label>
+                <input type="text" name="id" readonly><br>
+          
+                <label>Hydrant ID:</label>
+                <input type="text" name="hydrant_id"><br>
+          
+                <label>Cost:</label>
+                <input type="text" name="cost"><br>
+          
+                <label>Completed:</label>
+                <select name="completed">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select><br>
+          
+                <label>Needed:</label>
+                <select name="needed">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select><br>
+          
+                <div class="button-container">
+                    <input type="submit" value="Save Changes">
+                    <button type="button" class="cancel-button" onclick="hideForm('editFormContainer')">Cancel</button>
+                </div>
+            </form>
+          </div>
+        </div>
+        <div class="table-container">
+          <table border="1" cellpadding="5">
+              <tr>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  <th>ID</th>
+                  <th>Hydrant ID</th>
+                  <th>Cost</th>
+                  <th>Completed</th>
+                  <th>Needed</th>
+              </tr>
+              <tr>
+                  <td><a href="#edit">Edit</a></td>
+                  <td><a href="#">Delete</a></td>
+                  <td>1</td>
+                  <td>101</td>
+                  <td>150</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+              </tr>
+          </table>
+        </div>
+      </div>
     </div>
+    <script src="index.js"></script>
 </body>
 </html>

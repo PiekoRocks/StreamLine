@@ -10,10 +10,10 @@
 <body>
     <header>
         <div class="header-container">
-            <img src="logo.png" alt="StreamLine Logo" class="logo">
-            <h1>Manage Hydrants</h1>
+          <img src="logo.png" alt="StreamLine Logo" class="logo">
+          <h1>StreamLine</h1>
         </div>
-    </header>
+      </header>
     <nav>
         <ul class="navbar">
             <li><a href="index.html">Home</a></li>
@@ -26,41 +26,132 @@
     </nav>
     
     <div class="content">
-      <h2>Hydrant Records</h2>
-      <!-- make dropdown for hydrant flow rates and operational status -->
-      <table border="1" cellpadding="5">
-          <tr>
-              <th>Edit</th>
-              <th>Delete</th>
-              <th>ID</th>
-              <th>Region</th>
-              <th>Flow Rate</th>
-              <th>Operational</th>
-              <th>Longitude</th>
-              <th>Latitude</th>
-          </tr>
-          <tr>
-              <td><a href="#">Edit</a></td>
-              <td><a href="#">Delete</a></td>
-              <td>1</td>
-              <td>Downtown</td>
-              <td>1500</td>
-              <td>Yes</td>
-              <td>-23.0455</td>
-              <td>50.2865</td>
-          </tr>
-      </table>
-
-      <h2>Add a New Hydrant</h2>
-      <form>
-          <label>ID:</label> <input type="text" name="id"><br>
-          <label>Region:</label> <input type="text" name="region"><br>
-          <label>Flow Rate:</label> <input type="text" name="flow_rate"><br>
-          <label>Operational:</label> <input type="checkbox" name="operational"><br>
-          <label>Longitude:</label> <input type="text" name="longitude"><br>
-          <label>Latitude:</label> <input type="text" name="latitude"><br>
-          <input type="submit" value="Add Hydrant">
-      </form>
+      <h2 class="page-title">Hydrant Records</h2>
+      <div class="main-content">
+        <div class="side-content">
+          <button id="showAddFormButton" class="styled-button">Add New Hydrant</button>
+          <div class="form-container" id="addFormContainer" style="display: none;">
+            <h2>Add a New Hydrant</h2>
+            <form id="addForm">
+                <label>ID:</label>
+                <input type="text" name="id"><br>
+          
+                <label>Region:</label>
+                <input type="text" name="region"><br>
+          
+                <label>Flow Rate:</label>
+                <select name="flow_rate">
+                    <option value="CLASS AA">CLASS AA (1,500 gpm or greater)</option>
+                    <option value="CLASS A">CLASS A (1,000 gpm or greater)</option>
+                    <option value="CLASS B">CLASS B (500 to 1,000 gpm)</option>
+                    <option value="CLASS C" selected>CLASS C (&lt;500 gpm)</option>
+                </select>
+                <br>
+          
+                <label>Operational:</label>
+                <select name="operational">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+                <br>
+          
+                <label>Longitude:</label>
+                <input type="text" name="longitude"><br>
+          
+                <label>Latitude:</label>
+                <input type="text" name="latitude"><br>
+          
+                <div class="button-container">
+                    <input type="submit" value="Add Hydrant">
+                    <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
+                </div>
+            </form>
+          </div>
+          
+          <div class="form-container" id="editFormContainer" style="display: none;">
+            <h2>Edit Hydrant</h2>
+            <form id="editForm">
+                <label>ID:</label>
+                <input type="text" name="id" readonly><br>
+          
+                <label>Region:</label>
+                <input type="text" name="region"><br>
+          
+                <label>Flow Rate:</label>
+                <select name="flow_rate">
+                    <option value="CLASS AA">CLASS AA (1,500 gpm or greater)</option>
+                    <option value="CLASS A">CLASS A (1,000 gpm or greater)</option>
+                    <option value="CLASS B">CLASS B (500 to 1,000 gpm)</option>
+                    <option value="CLASS C">CLASS C (&lt;500 gpm)</option>
+                </select>
+                <br>
+          
+                <label>Operational:</label>
+                <select name="operational">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+                <br>
+          
+                <label>Longitude:</label>
+                <input type="text" name="longitude"><br>
+          
+                <label>Latitude:</label>
+                <input type="text" name="latitude"><br>
+          
+                <div class="button-container">
+                    <input type="submit" value="Save Changes">
+                    <button type="button" class="cancel-button" onclick="hideForm('editFormContainer')">Cancel</button>
+                </div>
+            </form>
+          </div>
+        </div>
+        <div class="table-container">
+          <table border="1" cellpadding="5">
+              <tr>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  <th>ID</th>
+                  <th>Region</th>
+                  <th>Flow Rate</th>
+                  <th>Operational</th>
+                  <th>Longitude</th>
+                  <th>Latitude</th>
+              </tr>
+              <tr>
+                  <td><a href="#edit">Edit</a></td>
+                  <td><a href="#">Delete</a></td>
+                  <td>2</td>
+                  <td>Uptown</td>
+                  <td>CLASS A</td>
+                  <td>No</td>
+                  <td>-22.1234</td>
+                  <td>51.1234</td>
+              </tr>
+              <tr>
+                <td><a href="#edit">Edit</a></td>
+                <td><a href="#">Delete</a></td>
+                <td>3</td>
+                <td>Midtown</td>
+                <td>CLASS B</td>
+                <td>Yes</td>
+                <td>-24.5678</td>
+                <td>49.5678</td>
+            </tr>
+            <tr>
+                <td><a href="#edit">Edit</a></td>
+                <td><a href="#">Delete</a></td>
+                <td>4</td>
+                <td>Suburb</td>
+                <td>CLASS B</td>
+                <td>No</td>
+                <td>-25.6789</td>
+                <td>48.6789</td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
+    <script src="index.js"></script>
 </body>
 </html>

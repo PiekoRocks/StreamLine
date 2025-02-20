@@ -39,19 +39,6 @@
     </p>
   </section>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const infoSection = document.querySelector('.info');
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            infoSection.classList.add('animate');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.5 });
-      observer.observe(infoSection);
-    });
-  </script>
+  <script src="index.js"></script>
 </body>
 </html>
