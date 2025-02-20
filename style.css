@@ -36,6 +36,7 @@ body {
 .side-content {
     flex: 0 0 400px; /* Set a fixed width for the sidebar */
     margin-right: 20px;
+    margin-top: 20px;
     background-color: #f0f0f0; /* Add background color to the sidebar */
     padding: 20px; /* Add padding to the sidebar */
     box-shadow: 0px 0px 5px rgba(0,0,0,0.2); /* Add a subtle shadow to the sidebar */
