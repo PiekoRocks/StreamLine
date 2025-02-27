@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Regions</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <link rel="icon" type="image/png" href="logo.png">
-</head>
-<body>
+    <title>Manage Workers</title>
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/png" href="../images/logo.png" />
+  </head>
+  <body>
     <header>
-        <div class="header-container">
-          <img src="logo.png" alt="StreamLine Logo" class="logo">
+      <div class="header-container">
+        <img src="../images/logo.png" alt="StreamLine Logo" class="logo">
           <h1>StreamLine</h1>
         </div>
       </header>
@@ -26,46 +26,52 @@
     </nav>
     
     <div class="content">
-      <h2 class="page-title">Region Records</h2>
+      <h2 class="page-title">Worker Records</h2>
       <div class="main-content">
         <div class="side-content">
-          <button id="showAddFormButton" class="styled-button">Add New Region</button>
+          <button id="showAddFormButton" class="styled-button">Add New Worker</button>
           <div class="form-container" id="addFormContainer" style="display: none;">
-            <h2>Add a New Region</h2>
+            <h2>Add a New Worker</h2>
             <form id="addForm">
                 <label>ID:</label>
                 <input type="text" name="id"><br>
           
-                <label>County Name:</label>
-                <input type="text" name="county_name"><br>
+                <label>Region:</label>
+                <input type="text" name="region"><br>
           
-                <label>Region Name:</label>
-                <input type="text" name="region_name"><br>
+                <label>Name:</label>
+                <input type="text" name="name"><br>
           
-                <label>Division Name:</label>
-                <input type="text" name="division_name"><br>
+                <label>Salary:</label>
+                <input type="text" name="salary"><br>
+          
+                <label>Assigned Date:</label>
+                <input type="date" name="assigned_date"><br>
           
                 <div class="button-container">
-                    <input type="submit" value="Add Region">
+                    <input type="submit" value="Add Worker">
                     <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
                 </div>
             </form>
           </div>
           
           <div class="form-container" id="editFormContainer" style="display: none;">
-            <h2>Edit Region</h2>
+            <h2>Edit Worker</h2>
             <form id="editForm">
                 <label>ID:</label>
                 <input type="text" name="id" readonly><br>
           
-                <label>County Name:</label>
-                <input type="text" name="county_name"><br>
+                <label>Region:</label>
+                <input type="text" name="region"><br>
           
-                <label>Region Name:</label>
-                <input type="text" name="region_name"><br>
+                <label>Name:</label>
+                <input type="text" name="name"><br>
           
-                <label>Division Name:</label>
-                <input type="text" name="division_name"><br>
+                <label>Salary:</label>
+                <input type="text" name="salary"><br>
+          
+                <label>Assigned Date:</label>
+                <input type="date" name="assigned_date"><br>
           
                 <div class="button-container">
                     <input type="submit" value="Save Changes">
@@ -80,54 +86,60 @@
                   <th>Edit</th>
                   <th>Delete</th>
                   <th>ID</th>
-                  <th>County Name</th>
-                  <th>Region Name</th>
-                  <th>Division Name</th>
+                  <th>Region</th>
+                  <th>Name</th>
+                  <th>Salary</th>
+                  <th>Assigned Date</th>
               </tr>
               <tr>
                 <td><a href="#edit">Edit</a></td>
                 <td><a href="#">Delete</a></td>
-                <td>101</td>
-                <td>Benton</td>
+                <td>201</td>
                 <td>Downtown</td>
-                <td>Central</td>
+                <td>John Smith</td>
+                <td>50000</td>
+                <td>2024-12-01</td>
               </tr>
               <tr>
                 <td><a href="#edit">Edit</a></td>
                 <td><a href="#">Delete</a></td>
-                <td>102</td>
-                <td>Linn</td>
+                <td>202</td>
                 <td>Riverside</td>
-                <td>Central</td>
+                <td>Jane Doe</td>
+                <td>55000</td>
+                <td>2024-11-15</td>
               </tr>
               <tr>
                 <td><a href="#edit">Edit</a></td>
                 <td><a href="#">Delete</a></td>
-                <td>103</td>
-                <td>Deschutes</td>
+                <td>203</td>
                 <td>High Desert</td>
-                <td>Central</td>
+                <td>Troy Diaz</td>
+                <td>48000</td>
+                <td>2024-09-10</td>
               </tr>
               <tr>
                 <td><a href="#edit">Edit</a></td>
                 <td><a href="#">Delete</a></td>
-                <td>104</td>
-                <td>Clatsop</td>
+                <td>204</td>
                 <td>North Coast</td>
-                <td>Central</td>
+                <td>Adam Danielson</td>
+                <td>52000</td>
+                <td>2024-10-05</td>
               </tr>
               <tr>
                 <td><a href="#edit">Edit</a></td>
                 <td><a href="#">Delete</a></td>
-                <td>105</td>
-                <td>Lane</td>
+                <td>205</td>
                 <td>South Valley</td>
-                <td>Central</td>
+                <td>Nico Johnson</td>
+                <td>51000</td>
+                <td>2024-08-15</td>
               </tr>
           </table>
         </div>
       </div>
     </div>
-    <script src="index.js"></script>
+    <script src="../js/index.js"></script>
 </body>
 </html>
