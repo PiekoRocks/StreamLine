@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Hydrants{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Hydrant Records</h2>
+<div class="main-content">
+    <div class="side-content">
+        <button id="showAddFormButton" class="styled-button">Add New Hydrant</button>
+        <div class="form-container" id="addFormContainer" style="display: none;">
+            <h2>Add a New Hydrant</h2>
+            <form id="addForm" action="{{ url_for('add_hydrant') }}" method="POST">
+                <label>Region:</label>
+                <input type="text" name="region"><br>
+                <label>Flow Rate:</label>
+                <select name="flow_rate">
+                    <option value="CLASS AA">CLASS AA (1,500 gpm or greater)</option>
+                    <option value="CLASS A">CLASS A (1,000 gpm or greater)</option>
+                    <option value="CLASS B">CLASS B (500 to 1,000 gpm)</option>
+                    <option value="CLASS C" selected>CLASS C (&lt;500 gpm)</option>
+                </select><br>
+                <label>Operational:</label>
+                <select name="operational">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select><br>
+                <label>Longitude:</label>
+                <input type="text" name="longitude"><br>
+                <label>Latitude:</label>
+                <input type="text" name="latitude"><br>
+                <div class="button-container">
+                    <input type="submit" value="Add Hydrant">
+                    <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="form-container" id="editFormContainer" style="display: none;">
+            <h2>Edit Hydrant</h2>
+            <form id="editForm" action="" method="POST">
+                <label>ID:</label>
+                <input type="text" name="id" readonly><br>
+                <label>Region:</label>
+                <input type="text" name="region"><br>
+                <label>Flow Rate:</label>
+                <select name="flow_rate">
+                    <option value="CLASS AA">CLASS AA (1,500 gpm or greater)</option>
+                    <option value="CLASS A">CLASS A (1,000 gpm or greater)</option>
+                    <option value="CLASS B">CLASS B (500 to 1,000 gpm)</option>
+                    <option value="CLASS C">CLASS C (&lt;500 gpm)</option>
+                </select><br>
+                <label>Operational:</label>
+                <select name="operational">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select><br>
+                <label>Longitude:</label>
+                <input type="text" name="longitude"><br>
+                <label>Latitude:</label>
+                <input type="text" name="latitude"><br>
+                <div class="button-container">
+                    <input type="submit" value="Save Changes">
+                    <button type="button" class="cancel-button" onclick="hideForm('editFormContainer')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-container">
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>ID</th>
+                <th>Region</th>
+                <th>Flow Rate</th>
+                <th>Operational</th>
+                <th>Longitude</th>
+                <th>Latitude</th>
+            </tr>
+            {% for hydrant in hydrants %}
+            <tr>
+                <td><a href="#edit">Edit</a></td>
+                <td>
+                    <form action="{{ url_for('delete_hydrant', id=hydrant.id) }}" method="POST" style="display:inline;">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+                <td>{{ hydrant.id }}</td>
+                <td>{{ hydrant.region }}</td>
+                <td>{{ hydrant.flow_rate }}</td>
+                <td>{{ hydrant.operational }}</td>
+                <td>{{ hydrant.longitude }}</td>
+                <td>{{ hydrant.latitude }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

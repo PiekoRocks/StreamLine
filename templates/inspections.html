@@ -1,141 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inspections Management</title>
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="icon" type="image/png" href="../images/logo.png" />
-    <script>
-        function confirmDelete() {
-            return confirm('Are you sure you want to delete this record? This action may also remove related data.');
-        }
-    </script>
-</head>
-<body>
-    <header>
-        <div class="header-container">
-          <img src="../images/logo.png" alt="StreamLine Logo" class="logo">
-          <h1>StreamLine</h1>
-        </div>
-      </header>
-    <nav>
-        <ul class="navbar">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="hydrants.html">Manage Hydrants</a></li>
-            <li><a href="regions.html">Manage Regions</a></li>
-            <li><a href="inspections.html">Track Inspections</a></li>
-            <li><a href="workers.html">Manage Workers</a></li>
-            <li><a href="maintenance.html">Log Maintenance</a></li>
-        </ul>
-    </nav>
-    
-    <div class="content">
-      <h2 class="page-title">Inspection Records</h2>
-      <div class="main-content">
-        <div class="side-content">
-          <button id="showAddFormButton" class="styled-button">Add New Inspection</button>
-          <div class="form-container" id="addFormContainer" style="display: none;">
+{% extends "base.html" %}
+
+{% block title %}Inspections Management{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Inspection Records</h2>
+<div class="main-content">
+    <div class="side-content">
+        <button id="showAddFormButton" class="styled-button">Add New Inspection</button>
+        <div class="form-container" id="addFormContainer" style="display: none;">
             <h2>Add Inspection</h2>
             <form id="addForm">
                 <label>Inspection Date:</label> 
                 <input type="date" name="inspection_date"><br>
-          
                 <label>Status:</label> 
                 <select name="status">
                     <option value="Passed">Passed</option>
                     <option value="Failed">Failed</option>
                 </select><br>
-          
                 <label>Notes:</label> 
                 <textarea name="notes"></textarea><br>
-          
                 <div class="button-container">
                     <input type="submit" value="Save Inspection">
                     <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
                 </div>
             </form>
-          </div>
-          
-          <div class="form-container" id="editFormContainer" style="display: none;">
+        </div>
+        <div class="form-container" id="editFormContainer" style="display: none;">
             <h2>Edit Inspection</h2>
             <form id="editForm">
                 <label>ID:</label>
                 <input type="text" name="id" readonly><br>
-          
                 <label>Inspection Date:</label> 
                 <input type="date" name="inspection_date"><br>
-          
                 <label>Status:</label> 
                 <select name="status">
                     <option value="Passed">Passed</option>
                     <option value="Failed">Failed</option>
                 </select><br>
-          
                 <label>Notes:</label> 
                 <textarea name="notes"></textarea><br>
-          
                 <div class="button-container">
                     <input type="submit" value="Save Changes">
                     <button type="button" class="cancel-button" onclick="hideForm('editFormContainer')">Cancel</button>
                 </div>
             </form>
-          </div>
         </div>
-        <div class="table-container">
-          <table border="1" cellpadding="5">
-              <tr>
-                  <th>Edit</th>
-                  <th>Delete</th>
-                  <th>ID</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Notes</th>
-              </tr>
-              <tr>
+    </div>
+    <div class="table-container">
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
                 <td><a href="#edit">Edit</a></td>
                 <td><a href="#" onclick="return confirmDelete();">Delete</a></td>
                 <td>1</td>
                 <td>2025-02-01</td>
                 <td>Passed</td>
                 <td>Minor damage</td>
-              </tr>
-              <tr>
+            </tr>
+            <tr>
                 <td><a href="#edit">Edit</a></td>
                 <td><a href="#" onclick="return confirmDelete();">Delete</a></td>
                 <td>2</td>
                 <td>2025-01-15</td>
                 <td>Failed</td>
                 <td>Major repair needed</td>
-              </tr>
-              <tr>
+            </tr>
+            <tr>
                 <td><a href="#edit">Edit</a></td>
                 <td><a href="#" onclick="return confirmDelete();">Delete</a></td>
                 <td>3</td>
                 <td>2024-12-20</td>
                 <td>Passed</td>
                 <td>Passed inspection</td>
-              </tr>
-              <tr>
+            </tr>
+            <tr>
                 <td><a href="#edit">Edit</a></td>
                 <td><a href="#" onclick="return confirmDelete();">Delete</a></td>
                 <td>4</td>
                 <td>2025-01-25</td>
                 <td>Passed</td>
                 <td>Minor leak observed</td>
-              </tr>
-              <tr>
+            </tr>
+            <tr>
                 <td><a href="#edit">Edit</a></td>
                 <td><a href="#" onclick="return confirmDelete();">Delete</a></td>
                 <td>5</td>
                 <td>2024-11-30</td>
                 <td>Failed</td>
                 <td>Needs replacement</td>
-              </tr>
-          </table>
-        </div>
-      </div>
+            </tr>
+        </table>
     </div>
-    <script src="../js/index.js"></script>
-</body>
-</html>
+</div>
+{% endblock %}

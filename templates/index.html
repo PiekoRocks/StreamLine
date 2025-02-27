@@ -1,32 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StreamLine - Home</title>
-  <link href="../css/style.css" rel="stylesheet" type="text/css" />
-  <link rel="icon" type="image/png" href="../images/logo.png" />
-</head>
-<body>
-  <header>
-    <div class="header-container">
-      <img src="../images/logo.png" alt="StreamLine Logo" class="logo">
-      <h1>StreamLine</h1>
-    </div>
-  </header>
+{% extends "base.html" %}
 
-  <nav>
-    <ul class="navbar">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="hydrants.html">Manage Hydrants</a></li>
-      <li><a href="regions.html">Manage Regions</a></li>
-      <li><a href="inspections.html">Track Inspections</a></li>
-      <li><a href="workers.html">Manage Workers</a></li>
-      <li><a href="maintenance.html">Log Maintenance</a></li>
-    </ul>
-  </nav>
+{% block title %}StreamLine - Home{% endblock %}
 
-  <section class="info">
+{% block content %}
+<section class="info">
     <h2>About StreamLine</h2>
     <p>
       Our StreamLine application is designed to manage data for over 5,000 fire hydrants across urban, suburban, and rural areas. Fire hydrants require regular maintenance, including inspections and repairs performed by field workers. To ensure operational efficiency and make it easier to keep hydrants working for emergencies, the status of these hydrants must be tracked, allowing field workers to prioritize their tasks effectively.
@@ -37,8 +14,5 @@
     <p>
       The solution is to create a centralized fire hydrant database powered by StreamLine. This platform will automate manual tasks such as scheduling maintenance and inspections, reducing human error and increasing efficiency. Hydrants can be tracked in real-time, with a map-based interface providing up-to-date locations and operational statuses.
     </p>
-  </section>
-
-  <script src="../js/index.js"></script>
-</body>
-</html>
+</section>
+{% endblock %}

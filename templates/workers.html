@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Workers{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Worker Records</h2>
+<div class="main-content">
+    <div class="side-content">
+        <button id="showAddFormButton" class="styled-button">Add New Worker</button>
+        <div class="form-container" id="addFormContainer" style="display: none;">
+            <h2>Add a New Worker</h2>
+            <form id="addForm">
+                <label>ID:</label>
+                <input type="text" name="id"><br>
+                <label>Region:</label>
+                <input type="text" name="region"><br>
+                <label>Name:</label>
+                <input type="text" name="name"><br>
+                <label>Salary:</label>
+                <input type="text" name="salary"><br>
+                <label>Assigned Date:</label>
+                <input type="date" name="assigned_date"><br>
+                <div class="button-container">
+                    <input type="submit" value="Add Worker">
+                    <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="form-container" id="editFormContainer" style="display: none;">
+            <h2>Edit Worker</h2>
+            <form id="editForm">
+                <label>ID:</label>
+                <input type="text" name="id" readonly><br>
+                <label>Region:</label>
+                <input type="text" name="region"><br>
+                <label>Name:</label>
+                <input type="text" name="name"><br>
+                <label>Salary:</label>
+                <input type="text" name="salary"><br>
+                <label>Assigned Date:</label>
+                <input type="date" name="assigned_date"><br>
+                <div class="button-container">
+                    <input type="submit" value="Save Changes">
+                    <button type="button" class="cancel-button" onclick="hideForm('editFormContainer')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-container">
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>ID</th>
+                <th>Region</th>
+                <th>Name</th>
+                <th>Salary</th>
+                <th>Assigned Date</th>
+            </tr>
+            <tr>
+              <td><a href="#edit">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>201</td>
+              <td>Downtown</td>
+              <td>John Smith</td>
+              <td>50000</td>
+              <td>2024-12-01</td>
+            </tr>
+            <tr>
+              <td><a href="#edit">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>202</td>
+              <td>Riverside</td>
+              <td>Jane Doe</td>
+              <td>55000</td>
+              <td>2024-11-15</td>
+            </tr>
+            <tr>
+              <td><a href="#edit">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>203</td>
+              <td>High Desert</td>
+              <td>Troy Diaz</td>
+              <td>48000</td>
+              <td>2024-09-10</td>
+            </tr>
+            <tr>
+              <td><a href="#edit">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>204</td>
+              <td>North Coast</td>
+              <td>Adam Danielson</td>
+              <td>52000</td>
+              <td>2024-10-05</td>
+            </tr>
+            <tr>
+              <td><a href="#edit">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>205</td>
+              <td>South Valley</td>
+              <td>Nico Johnson</td>
+              <td>51000</td>
+              <td>2024-08-15</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

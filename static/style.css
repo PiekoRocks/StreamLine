@@ -220,6 +220,12 @@ input[type="submit"]:hover {
     background-color: #999;
 }
 
+/* Fixed width for edit and delete columns */
+table th:first-child, table td:first-child,
+table th:nth-child(2), table td:nth-child(2) {
+    width: 80px; /* Set a fixed width for the edit and delete columns */
+}
+
 /* Welcome message animation */
 .welcome-message {
     position: relative;

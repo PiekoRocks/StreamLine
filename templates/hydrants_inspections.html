@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Hydrant Inspections{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Hydrant Inspection Records</h2>
+<div class="main-content">
+    <div class="side-content">
+        <button id="showAddFormButton" class="styled-button">Add New Hydrant Inspection</button>
+        <div class="form-container" id="addFormContainer" style="display: none;">
+            <h2>Add Hydrant Inspection</h2>
+            <form id="addForm">
+                <label>Hydrant ID:</label>
+                <input type="text" name="hydrant_id"><br>
+                <label>Inspection ID:</label>
+                <input type="text" name="inspection_id"><br>
+                <div class="button-container">
+                    <input type="submit" value="Save Inspection">
+                    <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="form-container" id="editFormContainer" style="display: none;">
+            <h2>Edit Hydrant Inspection</h2>
+            <form id="editForm">
+                <label>ID:</label>
+                <input type="text" name="id" readonly><br>
+                <label>Hydrant ID:</label>
+                <input type="text" name="hydrant_id"><br>
+                <label>Inspection ID:</label>
+                <input type="text" name="inspection_id"><br>
+                <div class="button-container">
+                    <input type="submit" value="Save Changes">
+                    <button type="button" class="cancel-button" onclick="hideForm('editFormContainer')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-container">
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Hydrant Inspection ID</th>
+                <th>Inspection ID</th>
+            </tr>
+            <tr>
+                <td><a href="#edit">Edit</a></td>
+                <td><a href="#">Delete</a></td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td><a href="#edit">Edit</a></td>
+                <td><a href="#">Delete</a></td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td><a href="#edit">Edit</a></td>
+                <td><a href="#">Delete</a></td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td><a href="#edit">Edit</a></td>
+                <td><a href="#">Delete</a></td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td><a href="#edit">Edit</a></td>
+                <td><a href="#">Delete</a></td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

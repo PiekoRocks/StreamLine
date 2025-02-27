@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Regions{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Region Records</h2>
+<div class="main-content">
+    <div class="side-content">
+        <button id="showAddFormButton" class="styled-button">Add New Region</button>
+        <div class="form-container" id="addFormContainer" style="display: none;">
+            <h2>Add a New Region</h2>
+            <form id="addForm">
+                <label>ID:</label>
+                <input type="text" name="id"><br>
+                <label>County Name:</label>
+                <input type="text" name="county_name"><br>
+                <label>Region Name:</label>
+                <input type="text" name="region_name"><br>
+                <label>Division Name:</label>
+                <input type="text" name="division_name"><br>
+                <div class="button-container">
+                    <input type="submit" value="Add Region">
+                    <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="form-container" id="editFormContainer" style="display: none;">
+            <h2>Edit Region</h2>
+            <form id="editForm">
+                <label>ID:</label>
+                <input type="text" name="id" readonly><br>
+                <label>County Name:</label>
+                <input type="text" name="county_name"><br>
+                <label>Region Name:</label>
+                <input type="text" name="region_name"><br>
+                <label>Division Name:</label>
+                <input type="text" name="division_name"><br>
+                <div class="button-container">
+                    <input type="submit" value="Save Changes">
+                    <button type="button" class="cancel-button" onclick="hideForm('editFormContainer')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-container">
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>ID</th>
+                <th>County Name</th>
+                <th>Region Name</th>
+                <th>Division Name</th>
+            </tr>
+            <tr>
+              <td><a href="#edit">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>101</td>
+              <td>Benton</td>
+              <td>Downtown</td>
+              <td>Central</td>
+            </tr>
+            <tr>
+              <td><a href="#edit">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>102</td>
+              <td>Linn</td>
+              <td>Riverside</td>
+              <td>Central</td>
+            </tr>
+            <tr>
+              <td><a href="#edit">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>103</td>
+              <td>Deschutes</td>
+              <td>High Desert</td>
+              <td>Central</td>
+            </tr>
+            <tr>
+              <td><a href="#edit">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>104</td>
+              <td>Clatsop</td>
+              <td>North Coast</td>
+              <td>Central</td>
+            </tr>
+            <tr>
+              <td><a href="#edit">Edit</a></td>
+              <td><a href="#">Delete</a></td>
+              <td>105</td>
+              <td>Lane</td>
+              <td>South Valley</td>
+              <td>Central</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
