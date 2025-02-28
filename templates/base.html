@@ -16,14 +16,13 @@
     </header>
     <nav>
         <ul class="navbar">
-          <li><a href="{{ url_for('index') }}">Home</a></li>
-          <li><a href="{{ url_for('hydrants') }}">Manage Hydrants</a></li>
-          <li><a href="{{ url_for('regions') }}">Manage Regions</a></li>
-          <li><a href="{{ url_for('inspections') }}">Track Inspections</a></li>
-          <li><a href="{{ url_for('workers') }}">Manage Workers</a></li>
-          <li><a href="{{ url_for('maintenance') }}">Log Maintenance</a></li>
-          <li><a href="{{ url_for('workers_inspections') }}">Inspect Workers</a></li>
-          <li><a href="{{ url_for('hydrants_inspections') }}">Inspect Hydrants</a></li>
+            <li><a href="{{ url_for('show_hydrants') }}">Manage Hydrants</a></li>
+            <li><a href="{{ url_for('show_regions') }}">Manage Regions</a></li>
+            <li><a href="{{ url_for('show_inspections') }}">Track Inspections</a></li>
+            <li><a href="{{ url_for('show_workers') }}">Manage Workers</a></li>
+            <li><a href="{{ url_for('show_maintenance') }}">Log Maintenance</a></li>
+            <li><a href="{{ url_for('show_workers_inspections') }}">Inspect Workers</a></li>
+            <li><a href="{{ url_for('show_hydrants_inspections') }}">Inspect Hydrants</a></li>            
         </ul>
     </nav>
     <div class="content">

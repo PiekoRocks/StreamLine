@@ -70,7 +70,7 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5200)
 
 @app.route('/test_db')
 def test_db():
@@ -80,3 +80,46 @@ def test_db():
         return f"MySQL Results: {result['message']}"
     except Exception as e:
         return f"Database Connection Error: {e}"
+
+@app.route('/hydrants')
+def show_hydrants():
+    cursor.execute("SELECT * FROM Hydrants")
+    hydrants = cursor.fetchall()
+    return render_template('hydrants.html', hydrants=hydrants)
+
+@app.route('/regions')
+def show_regions():
+    cursor.execute("SELECT * FROM Regions")
+    regions = cursor.fetchall()
+    return render_template('regions.html', regions=regions)
+
+@app.route('/inspections')
+def show_inspections():
+    cursor.execute("SELECT * FROM Inspections")
+    inspections = cursor.fetchall()
+    return render_template('inspections.html', inspections=inspections)
+
+@app.route('/workers')
+def show_workers():
+    cursor.execute("SELECT * FROM Workers")
+    workers = cursor.fetchall()
+    return render_template('workers.html', workers=workers)
+
+@app.route('/maintenance')
+def show_maintenance():
+    cursor.execute("SELECT * FROM Maintenance")
+    maintenance = cursor.fetchall()
+    return render_template('maintenance.html', maintenance=maintenance)
+
+@app.route('/workers_inspections')
+def show_workers_inspections():
+    cursor.execute("SELECT * FROM Workers_Inspections")
+    workers_inspections = cursor.fetchall()
+    return render_template('workers_inspections.html', workers_inspections=workers_inspections)
+
+@app.route('/hydrants_inspections')
+def show_hydrants_inspections():
+    cursor.execute("SELECT * FROM Hydrants_Inspections")
+    hydrants_inspections = cursor.fetchall()
+    return render_template('hydrants_inspections.html', hydrants_inspections=hydrants_inspections)
+
