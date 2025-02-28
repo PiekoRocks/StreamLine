@@ -8,7 +8,7 @@ db = mysql.connector.connect(
     host="classmysql.engr.oregonstate.edu",
     user="cs340_diaztr",
     password="7663",
-    database="cs340_diaztr"
+    database="cs340_diaztr",
     autocommit=True
 )
 
