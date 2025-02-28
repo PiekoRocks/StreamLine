@@ -46,26 +46,30 @@ git clone https://github.com/PiekoRocks/StreamLine
 ```
 
 ## **Project Tree**
-sql/
-│-- StreamLine-ddl.sql
-│-- StreamLine-dml.sql
+```plaintext
+STREAMLINE/
+│── sql/
+│   ├── StreamLine-ddl.sql
+│   ├── StreamLine-dml.sql
 │
-static/
-│-- index.js
-│-- logo.png
-│-- style.css
+│── static/
+│   ├── index.js
+│   ├── logo.png
+│   ├── style.css
 │
-templates/
-│-- base.html
-│-- hydrants_inspections.html
-│-- hydrants.html
-│-- index.html
-│-- inspections.html
-│-- maintenance.html
-│-- regions.html
-│-- workers_inspections.html
-│-- workers.html
+│── templates/
+│   ├── base.html
+│   ├── hydrants_inspections.html
+│   ├── hydrants.html
+│   ├── index.html
+│   ├── inspections.html
+│   ├── maintenance.html
+│   ├── regions.html
+│   ├── workers_inspections.html
+│   ├── workers.html
 │
-│-- app.py
-│-- README.md
+├── app.py
+├── README.md
+```
+
 
