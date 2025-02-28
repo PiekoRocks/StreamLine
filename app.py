@@ -1,90 +1,82 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for
-from flask_mysqldb import MySQL
+from flask import Flask, render_template, request, redirect, url_for
+import mysql.connector
 
 app = Flask(__name__)
 
-# Configure your MySQL connection
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'your_username'
-app.config['MYSQL_PASSWORD'] = 'your_password'
-app.config['MYSQL_DB'] = 'firehydrantsdb'
+# Database connection
+db = mysql.connector.connect(
+    host="classmysql.engr.oregonstate.edu",
+    user="cs340_diaztr",
+    password="7663",
+    database="cs340_diaztr"
+)
 
-mysql = MySQL(app)
+# Enable dictionary mode for easy access to query results
+cursor = db.cursor(dictionary=True)
 
+
+@app.route('/hydrants')
+def show_hydrants():
+    cursor.execute("SELECT * FROM Hydrants")
+    hydrants = cursor.fetchall()
+    return render_template('hydrants.html', hydrants=hydrants)
+
+
+# Route to add a new hydrant
+@app.route('/add_hydrant', methods=['POST'])
+def add_hydrant():
+    region = request.form['region']
+    flow_rate = request.form['flow_rate']
+    operational = request.form['operational']
+    longitude = request.form['longitude']
+    latitude = request.form['latitude']
+
+    cursor = db.cursor()
+    cursor.execute(
+        "INSERT INTO Hydrants (region_id, flow_rate, is_operational, gps_long, gps_lat) VALUES (%s, %s, %s, %s, %s)",
+        (region, flow_rate, operational, longitude, latitude)
+    )
+    db.commit()
+    return redirect(url_for('show_hydrants'))
+
+# Route to update a hydrant
+@app.route('/edit_hydrant/<int:id>', methods=['POST'])
+def edit_hydrant(id):
+    region = request.form['region']
+    flow_rate = request.form['flow_rate']
+    operational = request.form['operational']
+    longitude = request.form['longitude']
+    latitude = request.form['latitude']
+
+    cursor = db.cursor()
+    cursor.execute(
+        "UPDATE Hydrants SET region_id=%s, flow_rate=%s, is_operational=%s, gps_long=%s, gps_lat=%s WHERE hydrant_id=%s",
+        (region, flow_rate, operational, longitude, latitude, id)
+    )
+    db.commit()
+    return redirect(url_for('show_hydrants'))
+
+# Route to delete a hydrant
+@app.route('/delete_hydrant/<int:id>', methods=['POST'])
+def delete_hydrant(id):
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM Hydrants WHERE hydrant_id = %s", (id,))
+    db.commit()
+    return redirect(url_for('show_hydrants'))
+
+# Home route
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/inspections')
-def inspections():
-    return render_template('inspections.html')
-
-@app.route('/maintenance')
-def maintenance():
-    return render_template('maintenance.html')
-
-@app.route('/regions')
-def regions():
-    return render_template('regions.html')
-
-@app.route('/workers')
-def workers():
-    return render_template('workers.html')
-
-@app.route('/workers_inspections')
-def workers_inspections():
-    return render_template('workers_inspections.html')
-
-@app.route('/hydrants_inspections')
-def hydrants_inspections():
-    return render_template('hydrants_inspections.html')
-
-
-@app.route('/hydrants', methods=['GET'])
-def hydrants():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM hydrants")
-    rows = cur.fetchall()
-    cur.close()
-    return render_template('hydrants.html', hydrants=rows)
-
-@app.route('/hydrants/add', methods=['POST'])
-def add_hydrant():
-    data = request.form
-    region = data.get('region')
-    flow_rate = data.get('flow_rate')
-    operational = data.get('operational')
-    longitude = data.get('longitude')
-    latitude = data.get('latitude')
-    cur = mysql.connection.cursor()
-    sql = "INSERT INTO hydrants (region, flow_rate, operational, longitude, latitude) VALUES (%s, %s, %s, %s, %s)"
-    cur.execute(sql, (region, flow_rate, operational, longitude, latitude))
-    mysql.connection.commit()
-    cur.close()
-    return redirect(url_for('get_hydrants'))
-
-@app.route('/hydrants/update/<int:id>', methods=['POST'])
-def update_hydrant(id):
-    data = request.form
-    region = data.get('region')
-    flow_rate = data.get('flow_rate')
-    operational = data.get('operational')
-    longitude = data.get('longitude')
-    latitude = data.get('latitude')
-    cur = mysql.connection.cursor()
-    sql = "UPDATE hydrants SET region=%s, flow_rate=%s, operational=%s, longitude=%s, latitude=%s WHERE id=%s"
-    cur.execute(sql, (region, flow_rate, operational, longitude, latitude, id))
-    mysql.connection.commit()
-    cur.close()
-    return redirect(url_for('get_hydrants'))
-
-@app.route('/hydrants/delete/<int:id>', methods=['POST'])
-def delete_hydrant(id):
-    cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM hydrants WHERE id = %s", [id])
-    mysql.connection.commit()
-    cur.close()
-    return redirect(url_for('get_hydrants'))
-
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/test_db')
+def test_db():
+    try:
+        cursor.execute("SELECT 'MySQL is working for cs340_diaztr!' AS message")
+        result = cursor.fetchone()
+        return f"MySQL Results: {result['message']}"
+    except Exception as e:
+        return f"Database Connection Error: {e}"
