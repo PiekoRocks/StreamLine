@@ -36,7 +36,7 @@
         </div>
         <div class="form-container" id="editFormContainer" style="display: none;">
             <h2>Edit Hydrant</h2>
-            <form id="editForm" action="" method="POST">
+            <form id="editForm" action="{{ url_for('edit_hydrant', id=hydrant.id) }}" method="POST">
                 <label>ID:</label>
                 <input type="text" name="id" readonly><br>
                 <label>Region:</label>
