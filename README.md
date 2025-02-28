@@ -45,6 +45,28 @@ StreamLine serves as a **centralized hub** for hydrant data, consolidating:
 git clone https://github.com/PiekoRocks/StreamLine
 ```
 
+### **Mac/Linux**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### **Windows (PowerShell)**
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### **Install Dependencies**
+```bash
+pip install flask mysql-connector-python
+```
+
+### **Run the Flask Server**
+```bash
+python app.py
+```
+
 ## **Project Tree**
 ```plaintext
 STREAMLINE/
