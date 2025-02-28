@@ -39,9 +39,33 @@ StreamLine serves as a **centralized hub** for hydrant data, consolidating:
 - [x] **SQL** (Database)
 - [ ] **Vanilla JavaScript** (for client-side logic & API calls)
 
-
 ## **Installation Guide**
 ### **Clone the Repository**
 ```bash
 git clone https://github.com/PiekoRocks/StreamLine
 ```
+
+## **Project Tree**
+sql/
+│-- StreamLine-ddl.sql
+│-- StreamLine-dml.sql
+│
+static/
+│-- index.js
+│-- logo.png
+│-- style.css
+│
+templates/
+│-- base.html
+│-- hydrants_inspections.html
+│-- hydrants.html
+│-- index.html
+│-- inspections.html
+│-- maintenance.html
+│-- regions.html
+│-- workers_inspections.html
+│-- workers.html
+│
+│-- app.py
+│-- README.md
+
