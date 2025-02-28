@@ -85,14 +85,21 @@ def test_db():
 
 @app.route('/hydrants')
 def show_hydrants():
+    db = mysql.connector.connect(
+        host="classmysql.engr.oregonstate.edu",
+        user="cs340_diaztr",
+        password="7663",
+        database="cs340_diaztr"
+    )
+    cursor = db.cursor(dictionary=True)  # Fresh cursor for the function
+
     cursor.execute("SELECT hydrant_id, region_id AS region, flow_rate, is_operational, gps_long AS longitude, gps_lat AS latitude FROM Hydrants")
     hydrants = cursor.fetchall()
 
-    # ✅ Fetch available regions for dropdown
-    cursor.execute("SELECT region_id FROM Regions")
-    regions = cursor.fetchall()
+    cursor.close()
+    db.close()  # Close connection after query execution
 
-    return render_template('hydrants.html', hydrants=hydrants, regions=regions)
+    return render_template('hydrants.html', hydrants=hydrants)
 
 
 @app.route('/regions')
@@ -132,4 +139,4 @@ def show_hydrants_inspections():
     return render_template('hydrants_inspections.html', hydrants_inspections=hydrants_inspections)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5200)
+    app.run(debug=True, host="0.0.0.0", port=5783)
