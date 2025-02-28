@@ -6,9 +6,9 @@ app = Flask(__name__)
 # Database connection
 db = mysql.connector.connect(
     host="classmysql.engr.oregonstate.edu",
-    user="cs340_diaztr",
-    password="7663",
-    database="cs340_diaztr",
+    user="cs340_danieada",
+    password="8552",
+    database="cs340_danieada",
     autocommit=True
 )
 
@@ -87,9 +87,9 @@ def test_db():
 def show_hydrants():
     db = mysql.connector.connect(
         host="classmysql.engr.oregonstate.edu",
-        user="cs340_diaztr",
-        password="7663",
-        database="cs340_diaztr"
+        user="cs340_danieada",
+        password="8552",
+        database="cs340_danieada"
     )
     cursor = db.cursor(dictionary=True)  # Fresh cursor for the function
 
@@ -139,4 +139,4 @@ def show_hydrants_inspections():
     return render_template('hydrants_inspections.html', hydrants_inspections=hydrants_inspections)
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5783)
+    app.run(debug=True, host="0.0.0.0", port=5892)
