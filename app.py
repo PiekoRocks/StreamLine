@@ -14,15 +14,9 @@ db = mysql.connector.connect(
 # Enable dictionary mode for easy access to query results
 cursor = db.cursor(dictionary=True)
 
+print("Available Routes:")
+print(app.url_map)
 
-@app.route('/hydrants')
-def show_hydrants():
-    cursor.execute("SELECT * FROM Hydrants")
-    hydrants = cursor.fetchall()
-    return render_template('hydrants.html', hydrants=hydrants)
-
-
-# Route to add a new hydrant
 @app.route('/add_hydrant', methods=['POST'])
 def add_hydrant():
     region = request.form['region']
@@ -32,12 +26,22 @@ def add_hydrant():
     latitude = request.form['latitude']
 
     cursor = db.cursor()
+
+    # 🔍 Check if region_id exists in Regions table
+    cursor.execute("SELECT COUNT(*) FROM Regions WHERE region_id = %s", (region,))
+    region_exists = cursor.fetchone()[0]
+
+    if region_exists == 0:
+        return "Error: Region ID does not exist. Please choose a valid region.", 400
+
+    # ✅ Insert Hydrant if region exists
     cursor.execute(
         "INSERT INTO Hydrants (region_id, flow_rate, is_operational, gps_long, gps_lat) VALUES (%s, %s, %s, %s, %s)",
         (region, flow_rate, operational, longitude, latitude)
     )
     db.commit()
     return redirect(url_for('show_hydrants'))
+
 
 # Route to update a hydrant
 @app.route('/edit_hydrant/<int:id>', methods=['POST'])
@@ -69,9 +73,6 @@ def delete_hydrant(id):
 def index():
     return render_template('index.html')
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5200)
-
 @app.route('/test_db')
 def test_db():
     try:
@@ -83,9 +84,15 @@ def test_db():
 
 @app.route('/hydrants')
 def show_hydrants():
-    cursor.execute("SELECT * FROM Hydrants")
+    cursor.execute("SELECT hydrant_id, region_id AS region, flow_rate, is_operational, gps_long AS longitude, gps_lat AS latitude FROM Hydrants")
     hydrants = cursor.fetchall()
-    return render_template('hydrants.html', hydrants=hydrants)
+
+    # ✅ Fetch available regions for dropdown
+    cursor.execute("SELECT region_id FROM Regions")
+    regions = cursor.fetchall()
+
+    return render_template('hydrants.html', hydrants=hydrants, regions=regions)
+
 
 @app.route('/regions')
 def show_regions():
@@ -123,3 +130,5 @@ def show_hydrants_inspections():
     hydrants_inspections = cursor.fetchall()
     return render_template('hydrants_inspections.html', hydrants_inspections=hydrants_inspections)
 
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5200)
