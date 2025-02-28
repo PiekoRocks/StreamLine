@@ -9,6 +9,7 @@ db = mysql.connector.connect(
     user="cs340_diaztr",
     password="7663",
     database="cs340_diaztr"
+    autocommit=True
 )
 
 # Enable dictionary mode for easy access to query results
