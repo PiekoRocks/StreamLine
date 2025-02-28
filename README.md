@@ -2,7 +2,7 @@
 A centralized application for managing and tracking fire hydrants.
 
 ## Live Link
-https://web.engr.oregonstate.edu/~johnsn26/CS340-Group-91-Step-3/index.html
+http://flip1.engr.oregonstate.edu:5783/hydrants
 
 ## Overview
 Our **StreamLine** application is designed to manage data for over **5,000 fire hydrants** across urban, suburban, and rural areas. Fire hydrants require **regular maintenance**, including inspections and repairs performed by field workers. 
