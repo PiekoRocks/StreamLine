@@ -1,125 +1,205 @@
 {% extends "base.html" %}
 
+{% block title %}Manage Hydrants{% endblock %}
+
 {% block content %}
-    <h1>Manage Hydrants</h1>
+<h2 class="page-title">Manage Hydrants</h2>
 
-    <!-- Add Hydrant Form -->
-    <h2>Add New Hydrant</h2>
-    <form action="{{ url_for('add_hydrant') }}" method="POST">
-        <label for="region">Region ID:</label>
-        <input type="number" name="region" required>
+<div class="main-content">
+    <div class="side-content">
+        <button id="showAddFormButton" class="styled-button">Add New Hydrant</button>
+    
+        <div class="form-container" id="addFormContainer" style="display: none;">
+            <h2>Add a New Hydrant</h2>
+            <form id="addHydrantForm" action="{{ url_for('add_hydrant') }}" method="POST">
+                <label>Region ID:</label>
+                <input type="number" name="region" required><br>
+    
+                <label>Flow Rate:</label>
+                <select name="flow_rate">
+                    <option value="CLASS AA">CLASS AA (1,500 gpm or greater)</option>
+                    <option value="CLASS A">CLASS A (1,000 gpm or greater)</option>
+                    <option value="CLASS B">CLASS B (500 to 1,000 gpm)</option>
+                    <option value="CLASS C">CLASS C (<500 gpm)</option>
+                </select><br>
+    
+                <label>Operational:</label>
+                <select name="operational">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select><br>
+    
+                <label>Longitude:</label>
+                <input type="text" name="longitude" required><br>
+    
+                <label>Latitude:</label>
+                <input type="text" name="latitude" required><br>
+    
+                <div class="button-container">
+                    <input type="submit" value="Add Hydrant">
+                    <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>    
 
-        <label for="flow_rate">Flow Rate:</label>
-        <select name="flow_rate">
-            <option value="CLASS AA">CLASS AA (1,500 gpm or greater)</option>
-            <option value="CLASS A">CLASS A (1,000 gpm or greater)</option>
-            <option value="CLASS B">CLASS B (500 to 1,000 gpm)</option>
-            <option value="CLASS C">CLASS C (<500 gpm)</option>
-        </select>
+    <div class="table-container">
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>ID</th>
+                    <th>Region ID</th>
+                    <th>Flow Rate</th>
+                    <th>Operational</th>
+                    <th>Longitude</th>
+                    <th>Latitude</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hydrant in hydrants %}
+                <tr>
+                    <td><button onclick="showEditForm('{{ hydrant.hydrant_id }}')">Edit</button></td>
+                    <td>
+                        <form action="{{ url_for('delete_hydrant', id=hydrant.hydrant_id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this hydrant?');">Delete</button>
+                        </form>
+                    </td>
+                    <td>{{ hydrant.hydrant_id }}</td>
+                    <td>{{ hydrant.region }}</td>
+                    <td>{{ hydrant.flow_rate }}</td>
+                    <td>{{ "Yes" if hydrant.is_operational else "No" }}</td>
+                    <td>{{ hydrant.longitude }}</td>
+                    <td>{{ hydrant.latitude }}</td>
+                </tr>
 
-        <label for="operational">Operational:</label>
-        <select name="operational">
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
+                <!-- Edit Hydrant Form (Hidden by Default) -->
+                <tr id="editFormContainer_{{ hydrant.hydrant_id }}" style="display: none;">
+                    <td colspan="8">
+                        <div class="form-container">
+                            <h2>Edit Hydrant</h2>
+                            <form action="{{ url_for('edit_hydrant', id=hydrant.hydrant_id) }}" method="POST">
+                                <label>ID:</label>
+                                <input type="text" name="id" value="{{ hydrant.hydrant_id }}" readonly><br>
 
-        <label for="longitude">Longitude:</label>
-        <input type="text" name="longitude" required>
+                                <label for="region">Region:</label>
+                                <select name="region">
+                                    {% for region in regions %}
+                                        <option value="{{ region.region_id }}" {% if region.region_id == hydrant.region %}selected{% endif %}>
+                                            {{ region.region_id }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
 
-        <label for="latitude">Latitude:</label>
-        <input type="text" name="latitude" required>
+                                <label>Flow Rate:</label>
+                                <select name="flow_rate">
+                                    <option value="CLASS AA" {% if hydrant.flow_rate == "CLASS AA" %} selected {% endif %}>CLASS AA (1,500 gpm or greater)</option>
+                                    <option value="CLASS A" {% if hydrant.flow_rate == "CLASS A" %} selected {% endif %}>CLASS A (1,000 gpm or greater)</option>
+                                    <option value="CLASS B" {% if hydrant.flow_rate == "CLASS B" %} selected {% endif %}>CLASS B (500 to 1,000 gpm)</option>
+                                    <option value="CLASS C" {% if hydrant.flow_rate == "CLASS C" %} selected {% endif %}>CLASS C (<500 gpm)</option>
+                                </select>
 
-        <button type="submit">Add Hydrant</button>
-    </form>
+                                <label>Operational:</label>
+                                <select name="operational">
+                                    <option value="1" {% if hydrant.is_operational %} selected {% endif %}>Yes</option>
+                                    <option value="0" {% if not hydrant.is_operational %} selected {% endif %}>No</option>
+                                </select>
 
-    <!-- Hydrants Table -->
-    <h2>Existing Hydrants</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Region ID</th>
-                <th>Flow Rate</th>
-                <th>Operational</th>
-                <th>Longitude</th>
-                <th>Latitude</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for hydrant in hydrants %}
-            <tr>
-                <td>{{ hydrant.hydrant_id }}</td>
-                <td>{{ hydrant.region }}</td>
-                <td>{{ hydrant.flow_rate }}</td>
-                <td>{{ "Yes" if hydrant.is_operational else "No" }}</td>
-                <td>{{ hydrant.longitude }}</td>
-                <td>{{ hydrant.latitude }}</td>
-                <td>
-                    <!-- Edit Button -->
-                    <button onclick="showEditForm('{{ hydrant.hydrant_id }}', '{{ hydrant.region }}', '{{ hydrant.flow_rate }}', '{{ hydrant.is_operational }}', '{{ hydrant.longitude }}', '{{ hydrant.latitude }}')">
-                        Edit
-                    </button>
+                                <label>Longitude:</label>
+                                <input type="text" name="longitude" value="{{ hydrant.longitude }}"><br>
 
-                    <!-- Delete Button -->
-                    <form action="{{ url_for('delete_hydrant', id=hydrant.hydrant_id) }}" method="POST" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this hydrant?');">Delete</button>
-                    </form>
-                </td>
-            </tr>
+                                <label>Latitude:</label>
+                                <input type="text" name="latitude" value="{{ hydrant.latitude }}"><br>
 
-            <!-- Edit Hydrant Form (Hidden by Default) -->
-            <tr id="editFormContainer_{{ hydrant.hydrant_id }}" style="display: none;">
-                <td colspan="7">
-                    <form id="editForm_{{ hydrant.hydrant_id }}" action="{{ url_for('edit_hydrant', id=hydrant.hydrant_id) }}" method="POST">
-                        <label>ID:</label>
-                        <input type="text" name="id" value="{{ hydrant.hydrant_id }}" readonly><br>
+                                <div class="button-container">
+                                    <button type="submit" class="styled-button">Save Changes</button>
+                                    <button type="button" class="cancel-button" onclick="hideForm('editFormContainer_{{ hydrant.hydrant_id }}')">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-                        <label for="region">Region:</label>
-                        <select name="region">
-                            {% for region in regions %}
-                                <option value="{{ region.region_id }}">{{ region.region_id }}</option>
-                            {% endfor %}
-                        </select>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const showAddFormButton = document.getElementById("showAddFormButton");
+        const addFormContainer = document.getElementById("addFormContainer");
 
-
-                        <label>Flow Rate:</label>
-                        <select name="flow_rate">
-                            <option value="CLASS AA" {% if hydrant.flow_rate == "CLASS AA" %} selected {% endif %}>CLASS AA (1,500 gpm or greater)</option>
-                            <option value="CLASS A" {% if hydrant.flow_rate == "CLASS A" %} selected {% endif %}>CLASS A (1,000 gpm or greater)</option>
-                            <option value="CLASS B" {% if hydrant.flow_rate == "CLASS B" %} selected {% endif %}>CLASS B (500 to 1,000 gpm)</option>
-                            <option value="CLASS C" {% if hydrant.flow_rate == "CLASS C" %} selected {% endif %}>CLASS C (<500 gpm)</option>
-                        </select><br>
-
-                        <label>Operational:</label>
-                        <select name="operational">
-                            <option value="1" {% if hydrant.is_operational %} selected {% endif %}>Yes</option>
-                            <option value="0" {% if not hydrant.is_operational %} selected {% endif %}>No</option>
-                        </select><br>
-
-                        <label>Longitude:</label>
-                        <input type="text" name="longitude" value="{{ hydrant.longitude }}"><br>
-
-                        <label>Latitude:</label>
-                        <input type="text" name="latitude" value="{{ hydrant.latitude }}"><br>
-
-                        <button type="submit">Save Changes</button>
-                        <button type="button" onclick="hideForm('editFormContainer_{{ hydrant.hydrant_id }}')">Cancel</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <script>
-        function showEditForm(id, region, flowRate, operational, longitude, latitude) {
-            document.getElementById("editFormContainer_" + id).style.display = "table-row";
+        if (showAddFormButton && addFormContainer) {
+            showAddFormButton.addEventListener("click", function () {
+                addFormContainer.classList.add("show");
+            });
+        } else {
+            console.error("🚨 Missing 'showAddFormButton' or 'addFormContainer'.");
         }
+    });
 
-        function hideForm(id) {
-            document.getElementById(id).style.display = "none";
+    function hideForm(id) {
+        const formContainer = document.getElementById(id);
+        if (formContainer) {
+            formContainer.classList.remove("show");
         }
-    </script>
+    }
+
+    function showEditForm(id) {
+    const editRow = document.getElementById("editFormContainer_" + id);
+    if (editRow) {
+        // Make the row visible
+        editRow.style.display = "table-row";
+
+        // Also make the nested .form-container visible
+        const formDiv = editRow.querySelector(".form-container");
+        if (formDiv) {
+            formDiv.classList.add("show");
+            }
+        }
+    }
+
+    function hideForm(id) {
+        const editRow = document.getElementById(id);
+        if (editRow) {
+            // Hide the row
+            editRow.style.display = "none";
+
+            // Remove the .show class from the nested div
+            const formDiv = editRow.querySelector(".form-container");
+            if (formDiv) {
+                formDiv.classList.remove("show");
+            }
+        }
+    }
+
+</script>
+
+
+
+<style>
+    /* For generic form containers (divs) */
+    .form-container {
+        display: none;
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin-top: 10px;
+        text-align: left;
+    }
+    .form-container.show {
+        display: block !important;
+    }
+    /* For table rows used as edit forms */
+    tr.show-row {
+        display: table-row !important;
+    }
+</style>
+
 
 {% endblock %}
+
