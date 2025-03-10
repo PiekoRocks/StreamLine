@@ -12,13 +12,22 @@ db = mysql.connector.connect(
     autocommit=True
 )
 
+def get_db_connection():
+    return mysql.connector.connect(
+        host="classmysql.engr.oregonstate.edu",
+        user="cs340_diaztr",
+        password="7663",
+        database="cs340_diaztr",
+        autocommit=True
+    )
+
 # Enable dictionary mode for easy access to query results
 cursor = db.cursor(dictionary=True)
 
 print("Available Routes:")
 print(app.url_map)
 
-# ================== HYDRANT ==================
+# ================== ADD HYDRANT ==================
 @app.route('/add_hydrant', methods=['POST'])
 def add_hydrant():
     print("🚀 Received POST request to add hydrant")
@@ -134,23 +143,223 @@ def show_hydrants():
     return render_template("hydrants.html", hydrants=hydrants, regions=regions)
 
 
+# ================== SHOW REGION ==================
 @app.route('/regions')
 def show_regions():
     cursor.execute("SELECT * FROM Regions")
     regions = cursor.fetchall()
     return render_template('regions.html', regions=regions)
 
+# ================== ADD REGION ==================
+@app.route('/add_region', methods=['POST'])
+def add_region():
+    county_name = request.form['county_name']
+    region_name = request.form['region_name']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO Regions (county_name, region_name) VALUES (%s, %s)", (county_name, region_name))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('list_regions'))
+
+# ================== EDIT REGION ==================
+@app.route('/edit_region/<int:region_id>', methods=['POST'])
+def edit_region(region_id):
+    county_name = request.form['county_name']
+    region_name = request.form['region_name']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE Regions SET county_name = %s, region_name = %s WHERE region_id = %s",
+                   (county_name, region_name, region_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('list_regions'))
+
+# ================== DELETE REGION ==================
+@app.route('/delete_region/<int:region_id>', methods=['POST'])
+def delete_region(region_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Delete region (Hydrants & Workers will be deleted via CASCADE)
+    cursor.execute("DELETE FROM Regions WHERE region_id = %s", (region_id,))
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('list_regions'))
+
+# ================== LIST REGION ==================
+@app.route('/regions')
+def list_regions():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)  # Ensures results are dictionaries, not tuples
+    cursor.execute("SELECT * FROM Regions")
+    regions = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    
+    return render_template('regions.html', regions=regions)
+
+# ================== SHOW INSPECTIONS ==================
 @app.route('/inspections')
 def show_inspections():
     cursor.execute("SELECT * FROM Inspections")
     inspections = cursor.fetchall()
     return render_template('inspections.html', inspections=inspections)
 
+# ================== LIST INSPECTIONS ==================
+# LIST: Display all inspections
+@app.route('/inspections')
+def list_inspections():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM Inspections")
+    inspections = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template('inspections.html', inspections=inspections)
+
+# ================== ADD INSPECTIONS ==================
+# ADD: Create a new inspection record
+@app.route('/add_inspection', methods=['POST'])
+def add_inspection():
+    inspection_date = request.form['inspection_date']
+    status = request.form['status']
+    note = request.form['notes']
+    # Map status to boolean: Passed => True (1), Failed => False (0)
+    inspection_completed = 1 if status == "Passed" else 0
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO Inspections (inspection_date, inspection_completed, note) VALUES (%s, %s, %s)",
+        (inspection_date, inspection_completed, note)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for('list_inspections'))
+
+# ================== EDIT INSPECTIONS ==================
+# EDIT: Update an existing inspection record
+@app.route('/edit_inspection/<int:inspection_id>', methods=['POST'])
+def edit_inspection(inspection_id):
+    inspection_date = request.form['inspection_date']
+    status = request.form['status']
+    note = request.form['notes']
+    inspection_completed = 1 if status == "Passed" else 0
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE Inspections SET inspection_date = %s, inspection_completed = %s, note = %s WHERE inspection_id = %s",
+        (inspection_date, inspection_completed, note, inspection_id)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for('list_inspections'))
+
+# ================== DELETE INSPECTIONS ==================
+# DELETE: Remove an inspection record
+@app.route('/delete_inspection/<int:inspection_id>', methods=['POST'])
+def delete_inspection(inspection_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM Inspections WHERE inspection_id = %s", (inspection_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for('list_inspections'))
+
 @app.route('/workers')
 def show_workers():
     cursor.execute("SELECT * FROM Workers")
     workers = cursor.fetchall()
     return render_template('workers.html', workers=workers)
+
+@app.route('/workers')
+def list_workers():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    # Fetch workers
+    cursor.execute("SELECT * FROM Workers")
+    workers = cursor.fetchall()
+    
+    # Fetch regions for the dropdown
+    cursor.execute("SELECT * FROM Regions")
+    regions = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+    
+    # Debug print to see if regions data is fetched
+    print("Regions fetched:", regions)
+    
+    return render_template('workers.html', workers=workers, regions=regions)
+
+
+# Add Worker
+@app.route('/add_worker', methods=['POST'])
+def add_worker():
+    region_id = request.form['region']
+    name = request.form['name']
+    salary = request.form['salary']
+    assigned_date = request.form['assigned_date']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO Workers (region_id, name, salary, assigned_date) VALUES (%s, %s, %s, %s)",
+        (region_id, name, salary, assigned_date)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('list_workers'))
+
+# Edit Worker
+@app.route('/edit_worker/<int:worker_id>', methods=['POST'])
+def edit_worker(worker_id):
+    region_id = request.form['region']
+    name = request.form['name']
+    salary = request.form['salary']
+    assigned_date = request.form['assigned_date']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE Workers SET region_id = %s, name = %s, salary = %s, assigned_date = %s WHERE worker_id = %s",
+        (region_id, name, salary, assigned_date, worker_id)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('list_workers'))
+
+# Delete Worker
+@app.route('/delete_worker/<int:worker_id>', methods=['POST'])
+def delete_worker(worker_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM Workers WHERE worker_id = %s", (worker_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('list_workers'))
+
 
 @app.route('/maintenance')
 def show_maintenance():

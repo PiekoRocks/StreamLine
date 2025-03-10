@@ -9,39 +9,24 @@
         <button id="showAddFormButton" class="styled-button">Add New Worker</button>
         <div class="form-container" id="addFormContainer" style="display: none;">
             <h2>Add a New Worker</h2>
-            <form id="addForm">
-                <label>ID:</label>
-                <input type="text" name="id"><br>
+            <form id="addForm" action="{{ url_for('add_worker') }}" method="POST">
                 <label>Region:</label>
-                <input type="text" name="region"><br>
+                <select name="region" required>
+                    {% for region in regions %}
+                    <option value="{{ region.region_id }}">
+                        {{ region.county_name }} - {{ region.region_name }}
+                    </option>
+                    {% endfor %}
+                </select><br>
                 <label>Name:</label>
-                <input type="text" name="name"><br>
+                <input type="text" name="name" required><br>
                 <label>Salary:</label>
-                <input type="text" name="salary"><br>
+                <input type="text" name="salary" required><br>
                 <label>Assigned Date:</label>
-                <input type="date" name="assigned_date"><br>
+                <input type="date" name="assigned_date" required><br>
                 <div class="button-container">
                     <input type="submit" value="Add Worker">
                     <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
-                </div>
-            </form>
-        </div>
-        <div class="form-container" id="editFormContainer" style="display: none;">
-            <h2>Edit Worker</h2>
-            <form id="editForm">
-                <label>ID:</label>
-                <input type="text" name="id" readonly><br>
-                <label>Region:</label>
-                <input type="text" name="region"><br>
-                <label>Name:</label>
-                <input type="text" name="name"><br>
-                <label>Salary:</label>
-                <input type="text" name="salary"><br>
-                <label>Assigned Date:</label>
-                <input type="date" name="assigned_date"><br>
-                <div class="button-container">
-                    <input type="submit" value="Save Changes">
-                    <button type="button" class="cancel-button" onclick="hideForm('editFormContainer')">Cancel</button>
                 </div>
             </form>
         </div>
@@ -57,52 +42,64 @@
                 <th>Salary</th>
                 <th>Assigned Date</th>
             </tr>
+            {% for worker in workers %}
             <tr>
-              <td><a href="#edit">Edit</a></td>
-              <td><a href="#">Delete</a></td>
-              <td>201</td>
-              <td>Downtown</td>
-              <td>John Smith</td>
-              <td>50000</td>
-              <td>2024-12-01</td>
+                <!-- Edit Button -->
+                <td>
+                    <button onclick="showEditForm('{{ worker.worker_id }}')">Edit</button>
+                </td>
+                <!-- Delete Button -->
+                <td>
+                    <form action="{{ url_for('delete_worker', worker_id=worker.worker_id) }}" method="POST" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this worker?');">Delete</button>
+                    </form>
+                </td>
+                <!-- Data Columns -->
+                <td>{{ worker.worker_id }}</td>
+                <td>{{ worker.region_id }}</td>
+                <td>{{ worker.name }}</td>
+                <td>{{ worker.salary }}</td>
+                <td>{{ worker.assigned_date }}</td>
             </tr>
-            <tr>
-              <td><a href="#edit">Edit</a></td>
-              <td><a href="#">Delete</a></td>
-              <td>202</td>
-              <td>Riverside</td>
-              <td>Jane Doe</td>
-              <td>55000</td>
-              <td>2024-11-15</td>
+            <!-- Edit Form for Each Worker (Hidden Initially) -->
+            <tr id="editFormContainer_{{ worker.worker_id }}" style="display: none;">
+                <td colspan="7">
+                    <div class="form-container">
+                        <h2>Edit Worker</h2>
+                        <form action="{{ url_for('edit_worker', worker_id=worker.worker_id) }}" method="POST">
+                            <input type="hidden" name="worker_id" value="{{ worker.worker_id }}">
+                            <label>Region:</label>
+                            <select name="region" required>
+                                {% for reg in regions %}
+                                <option value="{{ reg.region_id }}" {% if reg.region_id == worker.region_id %}selected{% endif %}>
+                                    {{ reg.county_name }} - {{ reg.region_name }}
+                                </option>
+                                {% endfor %}
+                            </select><br>
+                            <label>Name:</label>
+                            <input type="text" name="name" value="{{ worker.name }}" required><br>
+                            <label>Salary:</label>
+                            <input type="text" name="salary" value="{{ worker.salary }}" required><br>
+                            <label>Assigned Date:</label>
+                            <input type="date" name="assigned_date" value="{{ worker.assigned_date }}" required><br>
+                            <div class="button-container">
+                                <input type="submit" value="Save Changes">
+                                <button type="button" class="cancel-button" onclick="hideForm('editFormContainer_{{ worker.worker_id }}')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </td>
             </tr>
-            <tr>
-              <td><a href="#edit">Edit</a></td>
-              <td><a href="#">Delete</a></td>
-              <td>203</td>
-              <td>High Desert</td>
-              <td>Troy Diaz</td>
-              <td>48000</td>
-              <td>2024-09-10</td>
-            </tr>
-            <tr>
-              <td><a href="#edit">Edit</a></td>
-              <td><a href="#">Delete</a></td>
-              <td>204</td>
-              <td>North Coast</td>
-              <td>Adam Danielson</td>
-              <td>52000</td>
-              <td>2024-10-05</td>
-            </tr>
-            <tr>
-              <td><a href="#edit">Edit</a></td>
-              <td><a href="#">Delete</a></td>
-              <td>205</td>
-              <td>South Valley</td>
-              <td>Nico Johnson</td>
-              <td>51000</td>
-              <td>2024-08-15</td>
-            </tr>
+            {% endfor %}
         </table>
     </div>
 </div>
+<script>
+    function showEditForm(workerId) {
+        document.getElementById("editFormContainer_" + workerId).style.display = "table-row";
+    }
+    function hideForm(id) {
+        document.getElementById(id).style.display = "none";
+    }
+</script>
 {% endblock %}
