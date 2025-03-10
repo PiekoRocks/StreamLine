@@ -20,6 +20,8 @@ def get_db_connection():
         database="cs340_diaztr",
         autocommit=True
     )
+    
+app = Flask(__name__)
 
 # Enable dictionary mode for easy access to query results
 cursor = db.cursor(dictionary=True)
@@ -437,12 +439,14 @@ def delete_maintenance(maintenance_id):
     conn.close()
     return redirect(url_for('list_maintenance'))
 
+# ================== SHOW WORKER INSPECTIONS ==================
 @app.route('/workers_inspections')
 def show_workers_inspections():
     cursor.execute("SELECT * FROM Workers_Inspections")
     workers_inspections = cursor.fetchall()
     return render_template('workers_inspections.html', workers_inspections=workers_inspections)
 
+# ================== LIST WORKER INSPECTIONS ==================
 @app.route('/workers_inspections')
 def list_worker_inspections():
     conn = get_db_connection()
@@ -477,6 +481,7 @@ def list_worker_inspections():
         inspections=inspections
     )
 
+# ================== ADD WORKER INSPECTIONS ==================
 # 3. ADD: Create a new worker-inspection record
 @app.route('/workers_inspections/add', methods=['POST'])
 def add_worker_inspection():
@@ -495,6 +500,7 @@ def add_worker_inspection():
 
     return redirect(url_for('list_worker_inspections'))
 
+# ================== EDIT WORKER INSPECTIONS ==================
 # 4. EDIT: Update an existing worker-inspection record
 #    Since Workers_Inspections uses a composite key (worker_id, inspection_id),
 #    we delete the old row and insert a new one with the updated IDs.
@@ -527,6 +533,7 @@ def edit_worker_inspection():
 
     return redirect(url_for('list_worker_inspections'))
 
+# ================== DELETE WORKER INSPECTIONS ==================
 # 5. DELETE: Remove a worker-inspection record
 @app.route('/workers_inspections/delete', methods=['POST'])
 def delete_worker_inspection():
@@ -546,11 +553,106 @@ def delete_worker_inspection():
     return redirect(url_for('list_worker_inspections'))
 
 
+# ----------------------------------------------------------------
+# READ: Display all hydrant inspection records
+# ----------------------------------------------------------------
 @app.route('/hydrants_inspections')
 def show_hydrants_inspections():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM Hydrants_Inspections")
     hydrants_inspections = cursor.fetchall()
+    cursor.close()
+    conn.close()
     return render_template('hydrants_inspections.html', hydrants_inspections=hydrants_inspections)
+
+# ----------------------------------------------------------------
+# CREATE: Add a new hydrant inspection record
+# ----------------------------------------------------------------
+@app.route('/add_hydrant_inspection', methods=['POST'])
+def add_hydrant_inspection():
+    hydrant_id = request.form.get('hydrant_id')
+    inspection_id = request.form.get('inspection_id')
+    
+    if not hydrant_id or not inspection_id:
+        return "Error: Missing form data", 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "INSERT INTO Hydrants_Inspections (hydrant_id, inspection_id) VALUES (%s, %s)",
+            (hydrant_id, inspection_id)
+        )
+        conn.commit()
+    except Exception as e:
+        print("Error adding hydrant inspection:", e)
+        return "Error adding hydrant inspection", 500
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('show_hydrants_inspections'))
+
+# ----------------------------------------------------------------
+# UPDATE: Edit an existing hydrant inspection record using composite keys
+# ----------------------------------------------------------------
+@app.route('/edit_hydrant_inspection/<string:hydrant_id>/<string:inspection_id>', methods=['GET', 'POST'])
+def edit_hydrant_inspection(hydrant_id, inspection_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    if request.method == 'POST':
+        new_hydrant_id = request.form.get('hydrant_id')
+        new_inspection_id = request.form.get('inspection_id')
+        
+        if not new_hydrant_id or not new_inspection_id:
+            return "Error: Missing form data", 400
+        
+        try:
+            cursor.execute(
+                "UPDATE Hydrants_Inspections SET hydrant_id = %s, inspection_id = %s WHERE hydrant_id = %s AND inspection_id = %s",
+                (new_hydrant_id, new_inspection_id, hydrant_id, inspection_id)
+            )
+            conn.commit()
+        except Exception as e:
+            print("Error updating hydrant inspection:", e)
+            return "Error updating hydrant inspection", 500
+        finally:
+            cursor.close()
+            conn.close()
+        return redirect(url_for('show_hydrants_inspections'))
+    else:
+        cursor.execute(
+            "SELECT * FROM Hydrants_Inspections WHERE hydrant_id = %s AND inspection_id = %s",
+            (hydrant_id, inspection_id)
+        )
+        inspection_record = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        if inspection_record is None:
+            return "Hydrant inspection not found", 404
+        return render_template('edit_hydrant_inspection.html', inspection=inspection_record)
+
+# ----------------------------------------------------------------
+# DELETE: Remove a hydrant inspection record using composite keys
+# ----------------------------------------------------------------
+@app.route('/delete_hydrant_inspection/<string:hydrant_id>/<string:inspection_id>', methods=['POST'])
+def delete_hydrant_inspection(hydrant_id, inspection_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "DELETE FROM Hydrants_Inspections WHERE hydrant_id = %s AND inspection_id = %s",
+            (hydrant_id, inspection_id)
+        )
+        conn.commit()
+    except Exception as e:
+        print("Error deleting hydrant inspection:", e)
+        return "Error deleting hydrant inspection", 500
+    finally:
+        cursor.close()
+        conn.close()
+    return redirect(url_for('show_hydrants_inspections'))
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5892)
