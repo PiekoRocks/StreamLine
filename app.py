@@ -595,7 +595,7 @@ def delete_worker_inspection():
 
     return redirect(url_for('list_worker_inspections'))
 
-
+# ================== SHOW HYDRANT INSPECTIONS ==================
 # ----------------------------------------------------------------
 # READ: Display all hydrant inspection records
 # ----------------------------------------------------------------
@@ -609,6 +609,7 @@ def show_hydrants_inspections():
     conn.close()
     return render_template('hydrants_inspections.html', hydrants_inspections=hydrants_inspections)
 
+# ================== ADD HYDRANT INSPECTIONS ==================
 # ----------------------------------------------------------------
 # CREATE: Add a new hydrant inspection record
 # ----------------------------------------------------------------
@@ -637,6 +638,7 @@ def add_hydrant_inspection():
 
     return redirect(url_for('show_hydrants_inspections'))
 
+# ================== EDIT HYDRANT INSPECTIONS ==================
 # ----------------------------------------------------------------
 # UPDATE: Edit an existing hydrant inspection record using composite keys
 # ----------------------------------------------------------------
@@ -676,6 +678,7 @@ def edit_hydrant_inspection(hydrant_id, inspection_id):
             return "Hydrant inspection not found", 404
         return render_template('edit_hydrant_inspection.html', inspection=inspection_record)
 
+# ================== DELETE HYDRANT INSPECTIONS ==================
 # ----------------------------------------------------------------
 # DELETE: Remove a hydrant inspection record using composite keys
 # ----------------------------------------------------------------
