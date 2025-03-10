@@ -364,12 +364,14 @@ def delete_worker(worker_id):
 
     return redirect(url_for('list_workers'))
 
+# ================== SHOW MAINTENANCE ==================
 @app.route('/maintenance')
 def show_maintenance():
     cursor.execute("SELECT * FROM Maintenance_Logs")
     maintenance = cursor.fetchall()
     return render_template('maintenance.html', maintenance=maintenance)
 
+# ================== LIST MAINTENANCE ==================
 # List Maintenance Records
 @app.route('/maintenance')
 def list_maintenance():
@@ -381,6 +383,7 @@ def list_maintenance():
     conn.close()
     return render_template('maintenance.html', maint_logs=maint_logs)
 
+# ================== ADD MAINTENANCE ==================
 # Add Maintenance Record
 @app.route('/add_maintenance', methods=['POST'])
 def add_maintenance():
@@ -401,6 +404,7 @@ def add_maintenance():
     conn.close()
     return redirect(url_for('list_maintenance'))
 
+# ================== EDIT MAINTENANCE ==================
 # Edit Maintenance Record
 @app.route('/edit_maintenance/<int:maintenance_id>', methods=['POST'])
 def edit_maintenance(maintenance_id):
@@ -421,6 +425,7 @@ def edit_maintenance(maintenance_id):
     conn.close()
     return redirect(url_for('list_maintenance'))
 
+# ================== DELETE MAINTENANCE ==================
 # Delete Maintenance Record
 @app.route('/delete_maintenance/<int:maintenance_id>', methods=['POST'])
 def delete_maintenance(maintenance_id):
@@ -432,12 +437,114 @@ def delete_maintenance(maintenance_id):
     conn.close()
     return redirect(url_for('list_maintenance'))
 
-
 @app.route('/workers_inspections')
 def show_workers_inspections():
     cursor.execute("SELECT * FROM Workers_Inspections")
     workers_inspections = cursor.fetchall()
     return render_template('workers_inspections.html', workers_inspections=workers_inspections)
+
+@app.route('/workers_inspections')
+def list_worker_inspections():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # 1) Fetch many-to-many relationship
+    cursor.execute("""
+        SELECT wi.worker_id, wi.inspection_id,
+               w.name AS worker_name,
+               i.inspection_date
+        FROM Workers_Inspections wi
+        JOIN Workers w ON wi.worker_id = w.worker_id
+        JOIN Inspections i ON wi.inspection_id = i.inspection_id
+    """)
+    worker_inspections = cursor.fetchall()
+
+    # 2) Fetch workers for the dropdown
+    cursor.execute("SELECT worker_id, name FROM Workers")
+    workers = cursor.fetchall()
+
+    # 3) Fetch inspections for the dropdown
+    cursor.execute("SELECT inspection_id, inspection_date FROM Inspections")
+    inspections = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        'workers_inspections.html',
+        worker_inspections=worker_inspections,
+        workers=workers,
+        inspections=inspections
+    )
+
+# 3. ADD: Create a new worker-inspection record
+@app.route('/workers_inspections/add', methods=['POST'])
+def add_worker_inspection():
+    worker_id = request.form['worker_id']
+    inspection_id = request.form['inspection_id']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO Workers_Inspections (worker_id, inspection_id) VALUES (%s, %s)",
+        (worker_id, inspection_id)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('list_worker_inspections'))
+
+# 4. EDIT: Update an existing worker-inspection record
+#    Since Workers_Inspections uses a composite key (worker_id, inspection_id),
+#    we delete the old row and insert a new one with the updated IDs.
+@app.route('/workers_inspections/edit', methods=['POST'])
+def edit_worker_inspection():
+    original_worker_id = request.form['original_worker_id']
+    original_inspection_id = request.form['original_inspection_id']
+
+    new_worker_id = request.form['worker_id']
+    new_inspection_id = request.form['inspection_id']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Delete the old record
+    cursor.execute(
+        "DELETE FROM Workers_Inspections WHERE worker_id = %s AND inspection_id = %s",
+        (original_worker_id, original_inspection_id)
+    )
+
+    # Insert the new record
+    cursor.execute(
+        "INSERT INTO Workers_Inspections (worker_id, inspection_id) VALUES (%s, %s)",
+        (new_worker_id, new_inspection_id)
+    )
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('list_worker_inspections'))
+
+# 5. DELETE: Remove a worker-inspection record
+@app.route('/workers_inspections/delete', methods=['POST'])
+def delete_worker_inspection():
+    worker_id = request.form['worker_id']
+    inspection_id = request.form['inspection_id']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "DELETE FROM Workers_Inspections WHERE worker_id = %s AND inspection_id = %s",
+        (worker_id, inspection_id)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('list_worker_inspections'))
+
 
 @app.route('/hydrants_inspections')
 def show_hydrants_inspections():
