@@ -282,6 +282,25 @@ def delete_inspection(inspection_id):
     conn.close()
     return redirect(url_for('list_inspections'))
 
+
+@app.route('/workers')
+def workers():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Fetch workers
+    cursor.execute("SELECT * FROM Workers")
+    workers = cursor.fetchall()
+
+    # Fetch regions for the dropdown
+    cursor.execute("SELECT * FROM Regions")
+    regions = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template('workers.html', workers=workers, regions=regions)
+
 # ================== SHOW WORKERS ==================
 @app.route('/workers')
 def show_workers():
@@ -312,7 +331,6 @@ def list_workers():
     return render_template('workers.html', workers=workers, regions=regions)
 
 # ================== ADD WORKERS ==================
-# Add Worker
 @app.route('/add_worker', methods=['POST'])
 def add_worker():
     region_id = request.form['region']
@@ -322,15 +340,24 @@ def add_worker():
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO Workers (region_id, name, salary, assigned_date) VALUES (%s, %s, %s, %s)",
-        (region_id, name, salary, assigned_date)
-    )
-    conn.commit()
-    cursor.close()
-    conn.close()
+
+    try:
+        # Insert the new worker directly
+        cursor.execute("""
+            INSERT INTO Workers (region_id, name, salary, assigned_date)
+            VALUES (%s, %s, %s, %s)
+        """, (region_id, name, salary, assigned_date))
+        conn.commit()
+    except Exception as e:
+        print("Error adding worker:", e)
+        return "Error adding worker", 500
+    finally:
+        cursor.close()
+        conn.close()
 
     return redirect(url_for('list_workers'))
+
+
 
 # ================== EDIT WORKERS ==================
 # Edit Worker
@@ -438,6 +465,22 @@ def delete_maintenance(maintenance_id):
     cursor.close()
     conn.close()
     return redirect(url_for('list_maintenance'))
+
+# @app.route('/workers', methods=['GET'])
+# def workers():
+#     # 1. Query your database for worker records and region records
+#     all_workers = Worker.query.all()   # or your custom DB method
+#     all_regions = Region.query.all()   # or your custom DB method
+
+#     # 2. Render the 'workers.html' template,
+#     #    passing both the workers and regions lists
+#     return render_template(
+#         "workers.html",
+#         workers=all_workers,
+#         regions=all_regions
+#     )
+
+
 
 # ================== SHOW WORKER INSPECTIONS ==================
 @app.route('/workers_inspections')
