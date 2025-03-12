@@ -393,6 +393,10 @@ def delete_worker(worker_id):
 
     return redirect(url_for('list_workers'))
 
+@app.route("/maintenance")
+def maintenance():
+    return redirect(url_for("list_maintenance"))
+
 # ================== SHOW MAINTENANCE ==================
 @app.route('/maintenance')
 def show_maintenance():
@@ -402,7 +406,7 @@ def show_maintenance():
 
 # ================== LIST MAINTENANCE ==================
 # List Maintenance Records
-@app.route('/maintenance')
+@app.route('/list_maintenance')
 def list_maintenance():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -410,7 +414,7 @@ def list_maintenance():
     maint_logs = cursor.fetchall()
     cursor.close()
     conn.close()
-    return render_template('maintenance.html', maint_logs=maint_logs)
+    return render_template("maintenance.html", maint_logs=maint_logs)
 
 # ================== ADD MAINTENANCE ==================
 # Add Maintenance Record
