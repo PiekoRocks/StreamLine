@@ -15,8 +15,13 @@
         </div>
     </header>
     <nav>
-        <ul class="navbar">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <ul class="navbar" id="navbar">
+            <li><a href="{{ url_for('index') }}">About</a></li>
             <li><a href="{{ url_for('show_hydrants') }}">Manage Hydrants</a></li>
             <li><a href="{{ url_for('show_regions') }}">Manage Regions</a></li>
             <li><a href="{{ url_for('show_inspections') }}">Track Inspections</a></li>

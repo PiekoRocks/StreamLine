@@ -3,43 +3,35 @@ document.addEventListener("DOMContentLoaded", function() {
     const addFormContainer = document.getElementById('addFormContainer');
     const editFormContainer = document.getElementById('editFormContainer');
 
-    if (showAddFormButton) {
-        showAddFormButton.addEventListener('click', function() {
-            addFormContainer.style.display = addFormContainer.style.display === 'none' ? 'block' : 'none';
-            showAddFormButton.style.display = 'none';
+    const hamburger = document.getElementById('hamburger');
+    const navbar = document.getElementById('navbar');
+
+    if (hamburger && navbar) {
+        hamburger.addEventListener('click', function() {
+            navbar.classList.toggle('active');
         });
     }
-
-    function showEditForm(data) {
-        const editForm = document.getElementById('editForm');
-        for (const key in data) {
-            if (editForm[key]) {
-                editForm[key].value = data[key];
-            }
-        }
-        editFormContainer.style.display = 'block';
-        showAddFormButton.style.display = 'none';
-    }
-
-    document.querySelectorAll('a[href="#edit"]').forEach(editLink => {
-        editLink.addEventListener('click', function(event) {
-            event.preventDefault();
-            const row = this.closest('tr');
-            const data = {};
-            row.querySelectorAll('td').forEach((cell, index) => {
-                const header = row.closest('table').querySelectorAll('th')[index].innerText.toLowerCase().replace(' ', '_');
-                data[header] = cell.innerText;
-            });
-            showEditForm(data);
-        });
-    });
 });
 
 function hideForm(formId) {
-    document.getElementById(formId).style.display = 'none';
+    const formContainer = document.getElementById(formId);
+    if (formContainer) {
+        formContainer.style.display = 'none';
+    }
     const showAddFormButton = document.getElementById('showAddFormButton');
     if (showAddFormButton) {
         showAddFormButton.style.display = 'block';
+    }
+}
+
+function showEditForm(id) {
+    const editRow = document.getElementById("editFormContainer_" + id);
+    if (editRow) {
+        editRow.style.display = "table-row";
+        const formDiv = editRow.querySelector(".form-container");
+        if (formDiv) {
+            formDiv.classList.add("show");
+        }
     }
 }
 
