@@ -269,6 +269,7 @@ input[type="submit"]:hover {
 /* Remove extra attributes from delete forms */
 form.delete {
     padding: 0;
+    margin: 0;
     box-shadow: none;
     border-radius: 0;
     background: none;
