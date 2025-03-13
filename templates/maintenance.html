@@ -6,7 +6,6 @@
 <h2 class="page-title">Maintenance Records</h2>
 
 <div class="main-content">
-    <!-- Side Content: Add Button and Add Form -->
     <div class="side-content">
         <button id="showAddFormButton" class="styled-button">Add New Maintenance Record</button>
         <div class="form-container" id="addFormContainer" style="display: none;">
@@ -29,7 +28,6 @@
         </div>
     </div>
 
-    <!-- Table Container: List of Maintenance Records -->
     <div class="table-container">
         <table border="1" cellpadding="5">
             <thead>
@@ -46,11 +44,11 @@
                 {% for record in maint_logs %}
                 <tr>
                     <td>
-                        <button onclick="showEditForm('{{ record.maintenance_id }}')">Edit</button>
+                        <button class="edit-button" onclick="showEditForm('{{ record.maintenance_id }}')">Edit</button>
                     </td>
                     <td>
-                        <form action="{{ url_for('delete_maintenance', maintenance_id=record.maintenance_id) }}" method="POST" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+                        <form class="delete" action="{{ url_for('delete_maintenance', maintenance_id=record.maintenance_id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
                         </form>
                     </td>
                     <td>{{ record.maintenance_id }}</td>
@@ -58,7 +56,6 @@
                     <td>{{ record.maint_cost }}</td>
                     <td>{{ 'Yes' if record.maint_needed else 'No' }}</td>
                 </tr>
-                <!-- Inline Edit Form for Each Record (Hidden by Default) -->
                 <tr id="editFormContainer_{{ record.maintenance_id }}" style="display: none;">
                     <td colspan="6">
                         <div class="form-container">
@@ -89,7 +86,6 @@
 </div>
 
 <script>
-    // Wait for the DOM to load before adding event listeners
     document.addEventListener("DOMContentLoaded", function () {
         const showAddFormButton = document.getElementById("showAddFormButton");
         const addFormContainer = document.getElementById("addFormContainer");
@@ -122,19 +118,4 @@
     }
 </script>
 
-<style>
-    .form-container {
-        display: none;
-        background: white;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-        margin-top: 10px;
-        text-align: left;
-    }
-    .form-container.show {
-        display: block !important;
-    }
-</style>
 {% endblock %}
