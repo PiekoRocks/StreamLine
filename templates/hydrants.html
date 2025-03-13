@@ -3,6 +3,10 @@
 {% block title %}Manage Hydrants{% endblock %}
 
 {% block content %}
+<head>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
+</head>
+
 <h2 class="page-title">Manage Hydrants</h2>
 
 <div class="main-content">
@@ -198,7 +202,10 @@
     tr.show-row {
         display: table-row !important;
     }
+
 </style>
+
+
 
 
 {% endblock %}

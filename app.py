@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import mysql.connector
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", static_url_path="/static")
 
 # Database connection
 db = mysql.connector.connect(
@@ -726,6 +726,10 @@ def delete_worker_inspection():
     conn.close()
 
     return redirect(url_for('list_worker_inspections'))
+
+@app.route('/')
+def home():
+    return render_template('home.html')  # Ensure 'home.html' exists
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5892)
