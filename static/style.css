@@ -251,7 +251,7 @@ input[type="submit"]:hover {
 
 /* Specific styles for edit buttons */
 .edit-button {
-    background-color: #007BFF;
+    background-color: #00ff37;
     color: white;
     border: none;
     padding: 5px 10px;
