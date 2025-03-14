@@ -420,6 +420,98 @@ tr.show-row {
     margin: 4px 0;
 }
 
+a.tutorial {
+    display: block;
+    text-align: center;
+    color: #333333; /* Dark gray color */
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f4f4f4;
+}
+
+:root {
+    --pink: hsl(338, 70%, 55%);
+    --teal: hsl(183, 70%, 62%);
+    --white: #333;
+  }
+  
+pre {
+    --selector: var(--pink);
+    --property: var(--teal);
+    --punctuation: var(--white);
+    --undefined: var(--white);
+
+    font-size: 1rem;
+    font-weight: bold;
+    max-width: 900px;
+    color: var(--undefined);
+    background: hsl(0, 0%, 100%);
+    padding: 2rem;
+    border-radius: 1rem;
+
+    position: relative;
+    margin: 0 auto; /* Center the pre element horizontally */
+    transform-style: preserve-3d;
+    transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
+}
+
+  span.token-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #e72634;
+  }
+  
+  pre::before,
+  pre::after {
+    content: "";
+    position: absolute;
+    border-radius: inherit;
+  }
+  
+  /* shadow */
+  pre::before {
+    inset: 0.75rem;
+    border-radius: inherit;
+    background: black;
+    z-index: -1;
+    transform: translateZ(-50px);
+    filter: blur(15px);
+    opacity: 0.5;
+  }
+  
+  /* gradient thingy */
+  pre::after {
+    z-index: -2;
+    inset: -1rem;
+    background: linear-gradient(-45deg, rgb(179, 203, 255), rgb(255, 175, 175));
+    transform: translateZ(-50px);
+  }
+  
+  .selector {
+    color: var(--selector);
+  }
+  
+  .property {
+    color: var(--property);
+  }
+  
+  .punctuation {
+    color: var(--punctuation);
+  }
+  
+  .property + .punctuation {
+    color: var(--property);
+  }
+  
+  .pre-container {
+    position: relative;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  }
+
 @media (max-width: 1024px) {
     .navbar {
         display: none;
