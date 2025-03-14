@@ -24,7 +24,8 @@ def get_db_connection():
 app = Flask(__name__)
 
 # Enable dictionary mode for easy access to query results
-cursor = db.cursor(dictionary=True)
+conn = get_db_connection()
+cursor = conn.cursor(dictionary=True)
 
 print("Available Routes:")
 print(app.url_map)
@@ -46,17 +47,21 @@ def add_hydrant():
         print("❌ Missing form data!")
         return "Error: Missing form data", 400
 
-    cursor = db.cursor()
+    conn = get_db_connection()
+    cursor = conn.cursor()
     try:
         cursor.execute(
             "INSERT INTO Hydrants (region_id, flow_rate, is_operational, gps_long, gps_lat) VALUES (%s, %s, %s, %s, %s)",
             (region, flow_rate, int(operational), longitude, latitude)
         )
-        db.commit()
+        conn.commit()
         print("✅ Hydrant added successfully")
     except Exception as e:
         print(f"❌ Error adding hydrant: {e}")
         return "Error adding hydrant", 500
+    finally:
+        cursor.close()
+        conn.close()
 
     return redirect(url_for('show_hydrants'))
 
@@ -74,7 +79,8 @@ def edit_hydrant(id):
     else:
         operational = int(operational)
 
-    cursor = db.cursor()
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
     # Debugging: Print values before updating
     print(f"Updating hydrant {id} with values: {region}, {flow_rate}, {operational}, {longitude}, {latitude}")
@@ -98,7 +104,7 @@ def edit_hydrant(id):
         "UPDATE Hydrants SET region_id=%s, flow_rate=%s, is_operational=%s, gps_long=%s, gps_lat=%s WHERE hydrant_id=%s",
         (region, flow_rate, operational, longitude, latitude, id)
     )
-    db.commit()
+    conn.commit()
 
     print("Hydrant update committed successfully")
 
@@ -108,9 +114,10 @@ def edit_hydrant(id):
 # Route to delete a hydrant
 @app.route('/delete_hydrant/<int:id>', methods=['POST'])
 def delete_hydrant(id):
-    cursor = db.cursor()
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute("DELETE FROM Hydrants WHERE hydrant_id = %s", (id,))
-    db.commit()
+    conn.commit()
     return redirect(url_for('show_hydrants'))
 
 # Home route
@@ -130,7 +137,8 @@ def test_db():
 # ================== SHOW HYDRANT ==================
 @app.route('/hydrants')
 def show_hydrants():
-    cursor = db.cursor(dictionary=True)
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
 
     # Fetch hydrants
     cursor.execute("SELECT hydrant_id, region_id AS region, flow_rate, is_operational, gps_long AS longitude, gps_lat AS latitude FROM Hydrants")
