@@ -81,37 +81,6 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const showAddFormButton = document.getElementById("showAddFormButton");
-        const addFormContainer = document.getElementById("addFormContainer");
-
-        if (showAddFormButton && addFormContainer) {
-            showAddFormButton.addEventListener("click", function () {
-                addFormContainer.classList.add("show");
-            });
-        } else {
-            console.error("🚨 Missing 'showAddFormButton' or 'addFormContainer'.");
-        }
-    });
-
-    function hideForm(id) {
-        const formContainer = document.getElementById(id);
-        if (formContainer) {
-            formContainer.classList.remove("show");
-        }
-    }
-
-    function showEditForm(id) {
-        const editRow = document.getElementById("editFormContainer_" + id);
-        if (editRow) {
-            editRow.style.display = "table-row";
-            const formDiv = editRow.querySelector(".form-container");
-            if (formDiv) {
-                formDiv.classList.add("show");
-            }
-        }
-    }
-</script>
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
 
 {% endblock %}

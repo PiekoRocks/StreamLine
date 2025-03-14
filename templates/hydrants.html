@@ -20,12 +20,7 @@
                 <input type="number" name="region" required><br>
     
                 <label>Flow Rate:</label>
-                <select name="flow_rate">
-                    <option value="CLASS AA">CLASS AA (1,500 gpm or greater)</option>
-                    <option value="CLASS A">CLASS A (1,000 gpm or greater)</option>
-                    <option value="CLASS B">CLASS B (500 to 1,000 gpm)</option>
-                    <option value="CLASS C">CLASS C (&lt;500 gpm)</option>
-                </select><br>
+                <input type="number" name="flow_rate" required><br>
     
                 <label>Operational:</label>
                 <select name="operational">
@@ -97,12 +92,7 @@
                                 </select>
 
                                 <label>Flow Rate:</label>
-                                <select name="flow_rate">
-                                    <option value="CLASS AA" {% if hydrant.flow_rate == "CLASS AA" %} selected {% endif %}>CLASS AA (1,500 gpm or greater)</option>
-                                    <option value="CLASS A" {% if hydrant.flow_rate == "CLASS A" %} selected {% endif %}>CLASS A (1,000 gpm or greater)</option>
-                                    <option value="CLASS B" {% if hydrant.flow_rate == "CLASS B" %} selected {% endif %}>CLASS B (500 to 1,000 gpm)</option>
-                                    <option value="CLASS C" {% if hydrant.flow_rate == "CLASS C" %} selected {% endif %}>CLASS C (&lt;500 gpm)</option>
-                                </select>
+                                <input type="number" name="flow_rate" value="{{ hydrant.flow_rate }}" required><br>
 
                                 <label>Operational:</label>
                                 <select name="operational">
@@ -130,55 +120,6 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const showAddFormButton = document.getElementById("showAddFormButton");
-        const addFormContainer = document.getElementById("addFormContainer");
-
-        if (showAddFormButton && addFormContainer) {
-            showAddFormButton.addEventListener("click", function () {
-                addFormContainer.classList.add("show");
-            });
-        } else {
-            console.error("🚨 Missing 'showAddFormButton' or 'addFormContainer'.");
-        }
-    });
-
-    function hideForm(id) {
-        const formContainer = document.getElementById(id);
-        if (formContainer) {
-            formContainer.classList.remove("show");
-        }
-    }
-
-    function showEditForm(id) {
-    const editRow = document.getElementById("editFormContainer_" + id);
-    if (editRow) {
-        // Make the row visible
-        editRow.style.display = "table-row";
-
-        // Also make the nested .form-container visible
-        const formDiv = editRow.querySelector(".form-container");
-        if (formDiv) {
-            formDiv.classList.add("show");
-            }
-        }
-    }
-
-    function hideForm(id) {
-        const editRow = document.getElementById(id);
-        if (editRow) {
-            // Hide the row
-            editRow.style.display = "none";
-
-            // Remove the .show class from the nested div
-            const formDiv = editRow.querySelector(".form-container");
-            if (formDiv) {
-                formDiv.classList.remove("show");
-            }
-        }
-    }
-
-</script>
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
 
 {% endblock %}
