@@ -1,16 +1,24 @@
 document.addEventListener("DOMContentLoaded", function() {
     const showAddFormButton = document.getElementById('showAddFormButton');
     const addFormContainer = document.getElementById('addFormContainer');
-    const editFormContainer = document.getElementById('editFormContainer');
 
-    const hamburger = document.getElementById('hamburger');
-    const navbar = document.getElementById('navbar');
-
-    if (hamburger && navbar) {
-        hamburger.addEventListener('click', function() {
-            navbar.classList.toggle('active');
+    if (showAddFormButton && addFormContainer) {
+        showAddFormButton.addEventListener('click', function() {
+            addFormContainer.style.display = 'block';
+            showAddFormButton.style.display = 'none';
         });
     }
+
+    const editButtons = document.querySelectorAll('.edit-button');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const editFormContainer = document.getElementById('editFormContainer_' + id);
+            if (editFormContainer) {
+                editFormContainer.style.display = 'table-row';
+            }
+        });
+    });
 });
 
 function hideForm(formId) {

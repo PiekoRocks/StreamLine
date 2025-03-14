@@ -601,63 +601,64 @@ def delete_hydrant_inspection(hydrant_id, inspection_id):
         conn.close()
     return redirect(url_for('show_hydrants_inspections'))
 
-@app.route("/worker_inspections")
-def worker_inspections():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+# ================== WORKER INSPECTIONS ==================
+# @app.route("/worker_inspections")
+# def worker_inspections():
+#     conn = get_db_connection()
+#     cursor = conn.cursor(dictionary=True)
 
-    # Worker_Inspections
-    cursor.execute("""
-        SELECT wi.worker_id, w.name AS worker_name, wi.inspection_id, i.inspection_date
-        FROM Worker_Inspections wi
-        JOIN Workers w ON wi.worker_id = w.worker_id
-        JOIN Inspections i ON wi.inspection_id = i.inspection_id
-    """)
-    worker_inspections = cursor.fetchall()
+#     # Worker_Inspections
+#     cursor.execute("""
+#         SELECT wi.worker_id, w.name AS worker_name, wi.inspection_id, i.inspection_date
+#         FROM Workers_Inspections wi
+#         JOIN Workers w ON wi.worker_id = w.worker_id
+#         JOIN Inspections i ON wi.inspection_id = i.inspection_id
+#     """)
+#     worker_inspections = cursor.fetchall()
 
-    # Workers
-    cursor.execute("SELECT * FROM Workers")
-    workers = cursor.fetchall()
+#     # Workers
+#     cursor.execute("SELECT * FROM Workers")
+#     workers = cursor.fetchall()
 
-    # Inspections
-    cursor.execute("SELECT * FROM Inspections")
-    inspections = cursor.fetchall()
+#     # Inspections
+#     cursor.execute("SELECT * FROM Inspections")
+#     inspections = cursor.fetchall()
 
-    # Debug prints
-    print("=== DEBUG DATA ===")
-    print("workers:", workers)
-    print("inspections:", inspections)
-    print("worker_inspections:", worker_inspections)
+#     # Debug prints
+#     print("=== DEBUG DATA ===")
+#     print("workers:", workers)
+#     print("inspections:", inspections)
+#     print("worker_inspections:", worker_inspections)
 
-    cursor.close()
-    conn.close()
+#     cursor.close()
+#     conn.close()
 
-    return render_template(
-        "workers_inspections.html",
-        worker_inspections=worker_inspections,
-        workers=workers,
-        inspections=inspections
-    )
+#     return render_template(
+#         "workers_inspections.html",
+#         worker_inspections=worker_inspections,
+#         workers=workers,
+#         inspections=inspections
+#     )
 
 
 # ================== SHOW WORKER INSPECTIONS ==================
-@app.route('/workers_inspections')
-def show_workers_inspections():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Workers_Inspections")
-    workers_inspections = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return render_template('workers_inspections.html', workers_inspections=workers_inspections)
+# @app.route('/workers_inspections')
+# def show_workers_inspections():
+#     conn = get_db_connection()
+#     cursor = conn.cursor()
+#     cursor.execute("SELECT * FROM Workers_Inspections")
+#     workers_inspections = cursor.fetchall()
+#     cursor.close()
+#     conn.close()
+#     return render_template('workers_inspections.html', workers_inspections=workers_inspections)
 
 # ================== LIST WORKER INSPECTIONS ==================
 @app.route('/workers_inspections')
 def list_worker_inspections():
+    # print("list_worker_inspections route hit")
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
-    # 1) Fetch many-to-many relationship
     cursor.execute("""
         SELECT wi.worker_id, wi.inspection_id,
                w.name AS worker_name,
@@ -667,12 +668,11 @@ def list_worker_inspections():
         JOIN Inspections i ON wi.inspection_id = i.inspection_id
     """)
     worker_inspections = cursor.fetchall()
+    # print("Fetched worker_inspections:", worker_inspections)
 
-    # 2) Fetch workers for the dropdown
     cursor.execute("SELECT worker_id, name FROM Workers")
     workers = cursor.fetchall()
 
-    # 3) Fetch inspections for the dropdown
     cursor.execute("SELECT inspection_id, inspection_date FROM Inspections")
     inspections = cursor.fetchall()
 
@@ -685,6 +685,7 @@ def list_worker_inspections():
         workers=workers,
         inspections=inspections
     )
+
 
 # ================== ADD WORKER INSPECTIONS ==================
 # 3. ADD: Create a new worker-inspection record
