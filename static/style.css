@@ -174,11 +174,11 @@ table {
 }
 
 table th, table td {
-    border: 0px solid #ddd;
     padding: 15px;
     text-align: left;
     vertical-align: middle; /* Ensure vertical alignment */
     font-size: 1rem;
+    border: none;
 }
 
 table th {
@@ -189,6 +189,7 @@ table th {
 tr {
     background-color: #ffffff;
     transition: 0.5s;
+    border-bottom: 1px solid #ddd; /* Add bottom border to each row */
 }
 
 tr:hover {
