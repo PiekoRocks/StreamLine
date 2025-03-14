@@ -24,8 +24,8 @@ def get_db_connection():
 app = Flask(__name__)
 
 # Enable dictionary mode for easy access to query results
-conn = get_db_connection()
-cursor = conn.cursor(dictionary=True)
+# conn = get_db_connection()
+# cursor = conn.cursor(dictionary=True)
 
 print("Available Routes:")
 print(app.url_map)
@@ -127,6 +127,8 @@ def index():
 
 @app.route('/test_db')
 def test_db():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     try:
         cursor.execute("SELECT 'MySQL is working for cs340_diaztr!' AS message")
         result = cursor.fetchone()
@@ -156,8 +158,12 @@ def show_hydrants():
 # ================== SHOW REGION ==================
 @app.route('/regions')
 def show_regions():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM Regions")
     regions = cursor.fetchall()
+    cursor.close()
+    conn.close()
     return render_template('regions.html', regions=regions)
 
 # ================== ADD REGION ==================
@@ -221,8 +227,12 @@ def list_regions():
 # ================== SHOW INSPECTIONS ==================
 @app.route('/inspections')
 def show_inspections():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM Inspections")
     inspections = cursor.fetchall()
+    cursor.close()
+    conn.close()
     return render_template('inspections.html', inspections=inspections)
 
 # ================== LIST INSPECTIONS ==================
@@ -312,8 +322,12 @@ def workers():
 # ================== SHOW WORKERS ==================
 @app.route('/workers')
 def show_workers():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM Workers")
     workers = cursor.fetchall()
+    cursor.close()
+    conn.close()
     return render_template('workers.html', workers=workers)
 
 # ================== LIST WORKERS ==================
@@ -408,8 +422,12 @@ def maintenance():
 # ================== SHOW MAINTENANCE ==================
 @app.route('/maintenance')
 def show_maintenance():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM Maintenance_Logs")
     maintenance = cursor.fetchall()
+    cursor.close()
+    conn.close()
     return render_template('maintenance.html', maintenance=maintenance)
 
 # ================== LIST MAINTENANCE ==================
@@ -625,8 +643,12 @@ def worker_inspections():
 # ================== SHOW WORKER INSPECTIONS ==================
 @app.route('/workers_inspections')
 def show_workers_inspections():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM Workers_Inspections")
     workers_inspections = cursor.fetchall()
+    cursor.close()
+    conn.close()
     return render_template('workers_inspections.html', workers_inspections=workers_inspections)
 
 # ================== LIST WORKER INSPECTIONS ==================
