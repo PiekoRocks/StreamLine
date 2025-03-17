@@ -504,11 +504,23 @@ def delete_maintenance(maintenance_id):
 def show_hydrants_inspections():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
+
+    # Fetch hydrant inspections
     cursor.execute("SELECT * FROM Hydrants_Inspections")
     hydrants_inspections = cursor.fetchall()
+
+    # Fetch hydrants and sort by hydrant_id
+    cursor.execute("SELECT hydrant_id FROM Hydrants ORDER BY hydrant_id ASC")
+    hydrants = cursor.fetchall()
+
+    # Fetch inspections and sort by inspection_id
+    cursor.execute("SELECT inspection_id, inspection_date FROM Inspections ORDER BY inspection_id ASC")
+    inspections = cursor.fetchall()
+
     cursor.close()
     conn.close()
-    return render_template('hydrants_inspections.html', hydrants_inspections=hydrants_inspections)
+
+    return render_template("hydrants_inspections.html", hydrants_inspections=hydrants_inspections, hydrants=hydrants, inspections=inspections)
 
 # ================== ADD HYDRANT INSPECTIONS ==================
 # ----------------------------------------------------------------

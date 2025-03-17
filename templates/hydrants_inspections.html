@@ -11,9 +11,25 @@
             <h2>Add Hydrant Inspection</h2>
             <form id="addForm" action="{{ url_for('add_hydrant_inspection') }}" method="POST">
                 <label>Hydrant ID:</label>
-                <input type="text" name="hydrant_id" required><br>
+                <select name="hydrant_id" required>
+                    {% for hydrant in hydrants %}
+                    <option value="{{ hydrant.hydrant_id }}">
+                        {{ hydrant.hydrant_id }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <br>
+
                 <label>Inspection ID:</label>
-                <input type="text" name="inspection_id" required><br>
+                <select name="inspection_id" required>
+                    {% for inspection in inspections %}
+                    <option value="{{ inspection.inspection_id }}">
+                        Inspection {{ inspection.inspection_id }} on {{ inspection.inspection_date }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <br>
+
                 <div class="button-container">
                     <input type="submit" value="Save Inspection">
                     <button type="button" class="cancel-button" onclick="hideForm('addFormContainer')">Cancel</button>
@@ -54,9 +70,25 @@
                                 <input type="hidden" name="original_inspection_id" value="{{ inspection.inspection_id }}">
                                 
                                 <label>Hydrant ID:</label>
-                                <input type="text" name="hydrant_id" value="{{ inspection.hydrant_id }}" required><br>
+                                <select name="hydrant_id" required>
+                                    {% for hydrant in hydrants %}
+                                    <option value="{{ hydrant.hydrant_id }}" {% if hydrant.hydrant_id == inspection.hydrant_id %}selected{% endif %}>
+                                        {{ hydrant.hydrant_id }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <br>
+
                                 <label>Inspection ID:</label>
-                                <input type="text" name="inspection_id" value="{{ inspection.inspection_id }}" required><br>
+                                <select name="inspection_id" required>
+                                    {% for inspection in inspections %}
+                                    <option value="{{ inspection.inspection_id }}" {% if inspection.inspection_id == inspection.inspection_id %}selected{% endif %}>
+                                        Inspection {{ inspection.inspection_id }} on {{ inspection.inspection_date }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <br>
+
                                 <div class="button-container">
                                     <input type="submit" value="Save Changes">
                                     <button type="button" class="cancel-button" onclick="hideForm('editFormContainer_{{ inspection.hydrant_id }}_{{ inspection.inspection_id }}')">Cancel</button>
