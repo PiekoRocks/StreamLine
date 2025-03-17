@@ -57,7 +57,7 @@
                     </td>
                     <td>{{ record.maintenance_id }}</td>
                     <td>{{ record.maint_hydrant_id }}</td>
-                    <td>{{ record.maint_cost }}</td>
+                    <td>${{ record.maint_cost }}</td>
                     <td>{{ 'Yes' if record.maint_needed else 'No' }}</td>
                 </tr>
                 <tr id="editFormContainer_{{ record.maintenance_id }}" style="display: none;">
