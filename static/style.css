@@ -48,6 +48,10 @@ body {
     flex-direction: column;
     align-items: center; /* Center the forms horizontally */
     justify-content: center; /* Center the forms vertically */
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 20px; /* Adjust this value as needed */
+    z-index: 1000; /* Ensure it stays above other content */
 }
 
 .table-container {
