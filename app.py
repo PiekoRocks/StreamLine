@@ -438,9 +438,13 @@ def list_maintenance():
     cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM Maintenance_Logs")
     maint_logs = cursor.fetchall()
+
+    cursor.execute("SELECT hydrant_id FROM Hydrants ORDER BY hydrant_id ASC")
+    hydrants = cursor.fetchall()
+
     cursor.close()
     conn.close()
-    return render_template("maintenance.html", maint_logs=maint_logs)
+    return render_template("maintenance.html", maint_logs=maint_logs, hydrants=hydrants)
 
 # ================== ADD MAINTENANCE ==================
 # Add Maintenance Record

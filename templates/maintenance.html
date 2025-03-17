@@ -12,7 +12,11 @@
             <h2>Add a New Maintenance Record</h2>
             <form id="addForm" action="{{ url_for('add_maintenance') }}" method="POST">
                 <label>Hydrant ID:</label>
-                <input type="text" name="hydrant_id" required><br>
+                <select name="hydrant_id" required>
+                    {% for hydrant in hydrants %}
+                    <option value="{{ hydrant.hydrant_id }}">{{ hydrant.hydrant_id }}</option>
+                    {% endfor %}
+                </select><br>
                 <label>Cost:</label>
                 <input type="text" name="cost" required><br>
                 <label>Needed:</label>
@@ -63,7 +67,11 @@
                             <form action="{{ url_for('edit_maintenance', maintenance_id=record.maintenance_id) }}" method="POST">
                                 <input type="hidden" name="maintenance_id" value="{{ record.maintenance_id }}">
                                 <label>Hydrant ID:</label>
-                                <input type="text" name="hydrant_id" value="{{ record.maint_hydrant_id }}" required><br>
+                                <select name="hydrant_id" required>
+                                    {% for hydrant in hydrants %}
+                                    <option value="{{ hydrant.hydrant_id }}" {% if hydrant.hydrant_id == record.maint_hydrant_id %}selected{% endif %}>{{ hydrant.hydrant_id }}</option>
+                                    {% endfor %}
+                                </select><br>
                                 <label>Cost:</label>
                                 <input type="text" name="cost" value="{{ record.maint_cost }}" required><br>
                                 <label>Needed:</label>
