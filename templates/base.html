@@ -8,12 +8,14 @@
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
 </head>
 <body>
+    <!-- Header section -->
     <header>
         <div class="header-container">
           <img src="{{ url_for('static', filename='logo.png') }}" alt="StreamLine Logo" class="logo">
           <h1>StreamLine</h1>
         </div>
     </header>
+    <!-- Navigation bar -->
     <nav>
         <div class="hamburger" id="hamburger">
             <div></div>
@@ -31,9 +33,11 @@
             <li><a href="{{ url_for('show_hydrants_inspections') }}">Inspect Hydrants</a></li>            
         </ul>
     </nav>
+    <!-- Main content section -->
     <div class="content">
         {% block content %}{% endblock %}
     </div>
+    <!-- Link to the main JavaScript file -->
     <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
 </html>
